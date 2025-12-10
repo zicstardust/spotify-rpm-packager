@@ -7,7 +7,7 @@ do
 
     #copy RPM
     echo "copy RPM to /data"
-    cp -Rf /root/rpmbuild/RPMS/x86_64/* /data/
+    cp -Rf /home/spotify/rpmbuild/RPMS/x86_64/* /data/
 
 
     #cleanup
@@ -19,7 +19,7 @@ do
     rm -f /build/debian-binary
     rm -Rf /build/usr
 
-    rm -Rf /root/rpmbuild
+    rm -Rf /home/spotify/rpmbuild
 
 
     #Start interval

@@ -12,12 +12,17 @@ RUN dnf -y update && \
     rpmdevtools \
     binutils \
     gtk-update-icon-cache \
+    util-linux \
     && dnf clean all
 
 WORKDIR /build
 
 COPY scripts/* .
+COPY entrypoint.sh /entrypoint.sh
 
-RUN chmod +x /build/start.sh
+RUN chmod +x /build/start.sh /entrypoint.sh
 
+VOLUME [ "/data" ]
+
+ENTRYPOINT ["/entrypoint.sh"]
 CMD ["/build/start.sh"]

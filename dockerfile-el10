@@ -12,6 +12,7 @@ RUN dnf -y update && \
     rpmdevtools \
     binutils \
     gtk-update-icon-cache \
+    util-linux \
     && dnf clean all
 
 WORKDIR /build

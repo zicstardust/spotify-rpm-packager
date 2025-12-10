@@ -9,7 +9,7 @@ spotify_version = result['Version'].replace('1:', '')
 deb_file = f'/build/spotify-client_{spotify_version}_amd64.deb'
 
 
-BUILD_DIR = "/root/rpmbuild"
+BUILD_DIR = "/home/spotify/rpmbuild"
 
 
 # Create directory structure for rpmbuild

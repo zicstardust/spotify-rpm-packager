@@ -3,3 +3,4 @@ spotify.info
 __pycache__
 rpmbuild
 data/
+*.rpm

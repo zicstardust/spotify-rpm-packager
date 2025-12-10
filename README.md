@@ -41,4 +41,7 @@ services:
 
 | variables | Function | Default |
 | :----: | --- | --- |
+| `TZ` | Set Timezone | |
+| `PUID` | Set UID | 1000 |
+| `PGID` | Set GID | 1000 |
 | `INTERVAL` | Set the interval to check for updates and generate the next RPM. | `1d` |
