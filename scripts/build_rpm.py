@@ -25,13 +25,13 @@ os.mkdir(f'{BUILD_DIR}/SRPMS')
 shutil.copy(deb_file, f'{BUILD_DIR}/SOURCES')
 
 # Create temporary working directory
-WORK_DIR = "/tmp/spotify-build"
-os.mkdir(WORK_DIR)
-os.chdir(WORK_DIR)
+#WORK_DIR = "/tmp/spotify-build"
+#os.mkdir(WORK_DIR)
+#os.chdir(WORK_DIR)
 
 # Extract .deb manually
-os.system(f'ar x "/build/{deb_file}" 2>/dev/null')
-os.system('tar xf data.tar.* 2>/dev/null')
+os.system(f'ar x {deb_file} --output /build')
+os.system('tar xf /build/data.tar.gz')
 
 
 
@@ -47,7 +47,7 @@ os.makedirs (f'{INSTALL_DIR}/usr/share/man/man1', exist_ok=True)
 
 
 # Copy Spotify files
-os.system(f'cp -ar usr/share/spotify/* "{INSTALL_DIR}/usr/share/spotify/"')
+os.system(f'cp -ar /build/usr/share/spotify/* "{INSTALL_DIR}/usr/share/spotify/"')
 
 
 # Create launcher script
@@ -95,9 +95,9 @@ with open(output_path, "w", encoding="utf-8") as f:
 
 # Copy icons
 for size in [16, 22, 24, 32, 48, 64, 128, 256, 512]:
-    if os.path.isfile(f"usr/share/spotify/icons/spotify-linux-{size}.png"):
+    if os.path.isfile(f"/build/usr/share/spotify/icons/spotify-linux-{size}.png"):
         os.makedirs(f"{INSTALL_DIR}/usr/share/icons/hicolor/{size}x{size}/apps", exist_ok=True)
-        shutil.copy(f"usr/share/spotify/icons/spotify-linux-{size}.png", f"{INSTALL_DIR}/usr/share/icons/hicolor/{size}x{size}/apps/spotify.png")
+        shutil.copy(f"/build/usr/share/spotify/icons/spotify-linux-{size}.png", f"{INSTALL_DIR}/usr/share/icons/hicolor/{size}x{size}/apps/spotify.png")
 
 
 # Create appdata.xml
@@ -194,6 +194,12 @@ chmod -R a+wr %{{_datadir}}/spotify/ || true
 
 with open(output_path, "w", encoding="utf-8") as f:
     f.write(content)
+
+
+#Delete trash files
+#os.system(f"rm -Rf {INSTALL_DIR}/usr/share/spotify/icons")
+os.system(f"rm -f {INSTALL_DIR}/usr/share/spotify/spotify.desktop")
+os.system(f"rm -Rf {INSTALL_DIR}/usr/share/spotify/apt-keys")
 
 
 # Build the RPM

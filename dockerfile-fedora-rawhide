@@ -1,4 +1,4 @@
-FROM fedora:43
+FROM fedora:rawhide
 
 ENV INTERVAL=1d
 

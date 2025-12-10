@@ -1,4 +1,4 @@
-FROM fedora:43
+FROM almalinux:10.1
 
 ENV INTERVAL=1d
 
