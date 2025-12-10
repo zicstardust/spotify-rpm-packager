@@ -1,4 +1,4 @@
-name: Push image tag latest to docker hub
+name: Push images to docker hub
 
 on:
   push:
@@ -52,7 +52,8 @@ jobs:
             ${{ env.CONTAINER_REPO }}:fc${{ vars.FEDORA_CURRENT }}
             ${{ env.CONTAINER_REPO }}:latest
 
-        name: Build and push = fc{{ vars.FEDORA_PREVIOUS }}
+      -
+        name: Build and push - fc{{ vars.FEDORA_PREVIOUS }}
         uses: docker/build-push-action@v6
         with:
           context: .
@@ -61,7 +62,7 @@ jobs:
           push: true
           tags: ${{ env.CONTAINER_REPO }}:fc${{ vars.FEDORA_PREVIOUS }}
 
-
+      -
         name: Build and push - fc{{ vars.FEDORA_BETA }}
         uses: docker/build-push-action@v6
         with:
@@ -71,7 +72,7 @@ jobs:
           push: true
           tags: ${{ env.CONTAINER_REPO }}:fc${{ vars.FEDORA_BETA }}
 
-
+      -
         name: Build and push - rawhide
         uses: docker/build-push-action@v6
         with:
@@ -81,7 +82,7 @@ jobs:
           push: true
           tags: ${{ env.CONTAINER_REPO }}:rawhide
 
-
+      -
         name: Build and push - Enterprise Linux 8
         uses: docker/build-push-action@v6
         with:
@@ -91,7 +92,7 @@ jobs:
           push: true
           tags: ${{ env.CONTAINER_REPO }}:el8
 
-
+      -
         name: Build and push - Enterprise Linux 9
         uses: docker/build-push-action@v6
         with:
@@ -101,7 +102,7 @@ jobs:
           push: true
           tags: ${{ env.CONTAINER_REPO }}:el9
 
-
+      -
         name: Build and push - Enterprise Linux 10
         uses: docker/build-push-action@v6
         with:
