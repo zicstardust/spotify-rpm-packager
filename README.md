@@ -5,7 +5,7 @@ A lightweight tool that automates the creation of RPM packages for Spotify. It d
 Designed for simplicity and reliability, this generator helps users maintain up-to-date Spotify installations without relying on unofficial or outdated repositories.
 
 
-[GitHub](https://github.com/zicstardust/RPM-Spotify-Package-Generator)
+[GitHub](https://github.com/zicstardust/rpm-spotify-package-generator)
 
 [Docker Hub](https://hub.docker.com/r/zicstardust/RPM-Spotify-Package-Generator)
 
@@ -31,8 +31,8 @@ Designed for simplicity and reliability, this generator helps users maintain up-
 ```
 services:
   spotify-rpm:
-    container_name: RPM-Spotify-Package-Generator
-    image: zicstardust/RPM-Spotify-Package-Generator:latest
+    container_name: rpm-spotify-package-generator
+    image: zicstardust/rpm-spotify-package-generator:latest
     environment:
       TZ: America/New_York
       #INTERVAL: 1d

@@ -1,7 +1,7 @@
 services:
   spotify-rpm:
-    container_name: spotify-rpm
-    image: spotify-rpm
+    container_name: rpm-spotify-package-generator
+    image: rpm-spotify-package-generator
     build:
       dockerfile: dockerfile-el8
       #dockerfile: dockerfile-el9
