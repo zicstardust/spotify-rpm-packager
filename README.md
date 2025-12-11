@@ -1,6 +1,6 @@
 # RPM Spotify Package Generator
 
-A lightweight tool that automates the creation of RPM packages for Spotify. It downloads the latest Spotify release, applies necessary adjustments for system compatibility, and bundles everything into a clean RPM package ready for installation on RPM-based Linux distributions such as Fedora, OpenSUSE and RHEL derivatives.
+A lightweight tool that automates the creation of RPM packages for Spotify. It downloads the latest Spotify release, applies necessary adjustments for system compatibility, and bundles everything into a clean RPM package ready for installation on RPM-based Linux distributions such as Fedora and RHEL derivatives.
 
 Designed for simplicity and reliability, this generator helps users maintain up-to-date Spotify installations without relying on unofficial or outdated repositories.
 
@@ -22,9 +22,7 @@ Designed for simplicity and reliability, this generator helps users maintain up-
 | [`el8`](https://github.com/zicstardust/RPM-Spotify-Package-Generator/blob/main/dockerfile-el8) | amd64 | Create a Spotify package for RHEL 8 derivatives |
 | [`el9`](https://github.com/zicstardust/RPM-Spotify-Package-Generator/blob/main/dockerfile-el9) | amd64 | Create a Spotify package for RHEL 9 derivatives |
 | [`el`, `el10`](https://github.com/zicstardust/RPM-Spotify-Package-Generator/blob/main/dockerfile-el10) | amd64 | Create a Spotify package for RHEL 10 derivatives |
-| [`leap`, `leap16`](https://github.com/zicstardust/RPM-Spotify-Package-Generator/blob/main/dockerfile-leap) | amd64 | Create a Spotify package for latest stable version of openSUSE Leap |
-| [`leap-previous`,`leap15`](https://github.com/zicstardust/RPM-Spotify-Package-Generator/blob/main/dockerfile-leap-previous) | amd64 | Create a Spotify package for the previous stable version of openSUSE Leap. |
-| [`tumbleweed`](https://github.com/zicstardust/RPM-Spotify-Package-Generator/blob/main/dockerfile-tumbleweed) | amd64 | Create a Spotify package for openSUSE Tumbleweed. |
+
 
 ## Usage
 ### docker-compose
