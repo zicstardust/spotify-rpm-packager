@@ -3,11 +3,11 @@ services:
     container_name: rpm-spotify-package-generator
     image: rpm-spotify-package-generator
     build:
-      dockerfile: dockerfile-el8
+      #dockerfile: dockerfile-el8
       #dockerfile: dockerfile-el9
       #dockerfile: dockerfile-el10
       #dockerfile: dockerfile-fc-previous
-      #dockerfile: dockerfile
+      dockerfile: dockerfile
       #dockerfile: dockerfile-fc-beta
       #dockerfile: dockerfile-fc-rawhide
     environment:
@@ -17,4 +17,3 @@ services:
       - 80:80
     volumes:
       - ./data:/data
-      - ./repo:/var/www/html 
