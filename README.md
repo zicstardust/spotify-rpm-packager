@@ -51,6 +51,19 @@ services:
 | `ENABLE_SERVER_REPO` | Set `1` to enable web server repository | `0` |
 
 
+## Repository Web Server
+
+### exemple .repo file on client
+```
+[spotify]
+name=Spotify - $releasever
+baseurl=http://127.0.0.1/$releasever/$basearch/stable
+enabled=1
+gpgcheck=0
+#gpgkey=http://127.0.0.1/gpg
+```
+
+
 ## License
 
 This project is a packaging script. Spotify is proprietary software owned by Spotify AB.
