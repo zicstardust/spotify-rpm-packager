@@ -16,6 +16,9 @@ RUN dnf -y update && \
     util-linux \
     httpd \
     createrepo_c \
+    gpg \
+    python3-dnf \
+    rpm-sign \
     && dnf clean all \
     && rm -f /etc/httpd/conf.d/welcome.conf \
     && sed -i "s/User apache/User spotify/" /etc/httpd/conf/httpd.conf \
@@ -27,7 +30,7 @@ WORKDIR /build
 COPY scripts/* .
 COPY entrypoint.sh /entrypoint.sh
 
-RUN chmod +x /build/start.sh /entrypoint.sh
+RUN chmod +x /build/start.sh /entrypoint.sh /build/gpg-gen.sh
 
 VOLUME [ "/data" ]
 

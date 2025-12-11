@@ -13,7 +13,10 @@ services:
     environment:
       - INTERVAL=5m
       - DISABLE_WEB_SERVER=0
+      - GPG_NAME=Zic Stardust
+      - GPG_EMAIL=me@zicstardust.com
     ports:
       - 80:80
     volumes:
       - ./data:/data
+      - ./gpg:/gpg-key

@@ -203,3 +203,8 @@ os.system(f"rm -Rf {INSTALL_DIR}/usr/share/spotify/apt-keys")
 # Build the RPM
 print('Building the RPM...')
 os.system(f"rpmbuild -bb --define \"_topdir {BUILD_DIR}\" {BUILD_DIR}/SPECS/spotify.spec 2>&1 | grep -E '(^Wrote:|^error:|^Error)' || true")
+
+
+if os.getenv('GPG_NAME') and os.getenv('GPG_EMAIL'):
+    print('Sign RPM file...')
+    os.system(f'rpm --addsign /home/spotify/rpmbuild/RPMS/x86_64/*.rpm')

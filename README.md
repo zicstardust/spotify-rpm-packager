@@ -37,6 +37,7 @@ services:
       - 80:80
     volumes:
       - <path to RPMs output>:/data
+      - <path to GPG key>:/gpg-key #Required to backup generate GPG key
 ```
 
 ## Environment variables
@@ -50,20 +51,41 @@ services:
 | `DISABLE_WEB_SERVER` | Set `1` to disable web server repository | `0` |
 
 
+
+### GPG Sign
+Environment variables required to use GPG
+| variables | Function | Default |
+| :----: | --- | --- |
+| `GPG_NAME` | Your Name | |
+| `GPG_EMAIL` | Your E-mail | |
+
+
+
 ## Repository Web Server
 
 ## On client
 
 Exemple `/etc/yum.repos.d/spotify.repo` file
+
+### without GPG
 ```
 [spotify]
 name=Spotify - $releasever
 baseurl=http://127.0.0.1/$releasever/$basearch/stable
 enabled=1
 gpgcheck=0
-#gpgkey=http://127.0.0.1/gpg
 ```
-Install:
+
+### with GPG
+```
+[spotify]
+name=Spotify - $releasever
+baseurl=http://127.0.0.1/$releasever/$basearch/stable
+enabled=1
+gpgcheck=1
+gpgkey=http://127.0.0.1/gpg
+```
+### Install:
 ```
 sudo dnf install spotify-client
 ```
@@ -77,10 +99,13 @@ services:
     image: zicstardust/rpm-spotify-package-generator:fc42
     environment:
       TZ: America/New_York
+      GPG_NAME: Exemple
+      GPG_EMAIL: me@exemple.com
     ports:
       - 80:80
     volumes:
       - <path to RPMs output>:/data
+      - <path to GPG key>:/gpg-key
   fc43:
     container_name: spotify-fc43-releases
     image: zicstardust/rpm-spotify-package-generator:fc43
@@ -106,10 +131,6 @@ services:
     volumes:
       - <same path to RPMs output>:/data
 ```
-
-
-
-
 
 
 ## License

@@ -12,12 +12,22 @@ if ! id -u spotify >/dev/null 2>&1; then
     useradd -m -u "$PUID" -g "$PGID" -s /sbin/nologin spotify
 fi
 
-mkdir -p /data /home/spotify
 
-chown -R spotify:spotify /build /data /home/spotify
 
 if [ "$DISABLE_WEB_SERVER" != "1" ]; then
-    httpd 1> /dev/null
+    httpd &> /dev/null
 fi
+
+if [ "$GPG_NAME" ] && [ "$GPG_EMAIL" ]; then
+    if [ ! -f /gpg-key/private.pgp ] && [ ! -f /gpg-key/public.pgp ]; then
+        /build/gpg-gen.sh
+    fi
+
+    rpm --import /gpg-key/public.pgp
+fi
+
+mkdir -p /data /home/spotify /gpg-key
+
+chown -R spotify:spotify /build /data /home/spotify /gpg-key
 
 exec runuser -u spotify -- "$@"
