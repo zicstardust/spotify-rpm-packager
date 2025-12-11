@@ -1,4 +1,4 @@
-# RPM Spotify Package Generator
+# Spotify RPM Packager
 
 A lightweight tool that automates the creation of RPM packages for Spotify. It downloads the latest Spotify release, applies necessary adjustments for system compatibility, and bundles everything into a clean RPM package ready for installation on RPM-based Linux distributions such as Fedora and RHEL derivatives.
 
