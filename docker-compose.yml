@@ -6,10 +6,13 @@ services:
       dockerfile: dockerfile-el8
       #dockerfile: dockerfile-el9
       #dockerfile: dockerfile-el10
-      #dockerfile: dockerfile-fedora-previous
+      #dockerfile: dockerfile-fc-previous
       #dockerfile: dockerfile
-      #dockerfile: dockerfile-fedora-beta
-      #dockerfile: dockerfile-fedora-rawhide
+      #dockerfile: dockerfile-fc-beta
+      #dockerfile: dockerfile-fc-rawhide
+      #dockerfile: dockerfile-leap-previous
+      #dockerfile: dockerfile-leap
+      #dockerfile: dockerfile-tumbleweed
     environment:
       - INTERVAL=1d
     volumes:

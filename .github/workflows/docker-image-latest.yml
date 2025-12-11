@@ -21,6 +21,8 @@ env:
   FEDORA_PREVIOUS: 42
   FEDORA_CURRENT: 43
   FEDORA_BETA: 44
+  LEAP_PREVIOUS: 15
+  LEAP_CURRENT: 16
   
 jobs:
   build:
@@ -65,27 +67,31 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: dockerfile-fedora-previous
+          file: dockerfile-fc-previous
           platforms: ${{ env.PLATAFORM_ARCH }}
           push: true
-          tags: ${{ env.CONTAINER_REPO }}:fc${{ env.FEDORA_PREVIOUS }}
+          tags: |
+              ${{ env.CONTAINER_REPO }}:fc-previous
+              ${{ env.CONTAINER_REPO }}:fc${{ env.FEDORA_PREVIOUS }}
 
       -
         name: Build and push - fc${{ env.FEDORA_BETA }}
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: dockerfile-fedora-beta
+          file: dockerfile-fc-beta
           platforms: ${{ env.PLATAFORM_ARCH }}
           push: true
-          tags: ${{ env.CONTAINER_REPO }}:fc${{ env.FEDORA_BETA }}
+          tags: |
+              ${{ env.CONTAINER_REPO }}:fc${{ env.FEDORA_BETA }}
+              ${{ env.CONTAINER_REPO }}:fc-beta
 
       -
         name: Build and push - rawhide
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: dockerfile-fedora-rawhide
+          file: dockerfile-fc-rawhide
           platforms: ${{ env.PLATAFORM_ARCH }}
           push: true
           tags: ${{ env.CONTAINER_REPO }}:rawhide
@@ -118,4 +124,43 @@ jobs:
           file: dockerfile-el10
           platforms: ${{ env.PLATAFORM_ARCH }}
           push: true
-          tags: ${{ env.CONTAINER_REPO }}:el10
+          tags: |
+            ${{ env.CONTAINER_REPO }}:el
+            ${{ env.CONTAINER_REPO }}:el10
+          
+
+      -
+        name: Build and push - openSUSE Leap ${{ env.LEAP_PREVIOUS }}
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: dockerfile-leap-previous
+          platforms: ${{ env.PLATAFORM_ARCH }}
+          push: true
+          tags: |
+              ${{ env.CONTAINER_REPO }}:leap${{ env.LEAP_PREVIOUS }}
+              ${{ env.CONTAINER_REPO }}:leap-previous
+
+
+      -
+        name: Build and push - openSUSE Leap ${{ env.LEAP_CURRENT }}
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: dockerfile-leap
+          platforms: ${{ env.PLATAFORM_ARCH }}
+          push: true
+          tags: |
+            ${{ env.CONTAINER_REPO }}:leap${{ env.LEAP_CURRENT }}
+            ${{ env.CONTAINER_REPO }}:leap
+
+
+      -
+        name: Build and push - openSUSE Tumbleweed
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: dockerfile-tumbleweed
+          platforms: ${{ env.PLATAFORM_ARCH }}
+          push: true
+          tags: ${{ env.CONTAINER_REPO }}:tumbleweed
