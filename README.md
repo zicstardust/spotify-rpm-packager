@@ -91,14 +91,13 @@ sudo dnf install spotify-client
 ```
 
 ## Multiple release repository
-Example of a single web server for FC 42, 43, 44 and EL 9.
+Example of repository with a single web server for FC stable, previous stable, beta, rawhide and EL 10.
 ```
 services:
-  fc42:
-    container_name: spotify-fc42-releases
-    image: zicstardust/spotify-rpm-packager:fc42
+  stable:
+    container_name: spotify-fedora-stable-releases
+    image: zicstardust/spotify-rpm-packager:latest
     environment:
-      TZ: America/New_York
       GPG_NAME: Exemple
       GPG_EMAIL: me@exemple.com
     ports:
@@ -106,27 +105,31 @@ services:
     volumes:
       - <path to RPMs output>:/data
       - <path to GPG key>:/gpg-key
-  fc43:
-    container_name: spotify-fc43-releases
-    image: zicstardust/spotify-rpm-packager:fc43
+  previous:
+    container_name: spotify-fedora-previous-releases
+    image: zicstardust/spotify-rpm-packager:fc-previous
     environment:
-      TZ: America/New_York
       DISABLE_WEB_SERVER: 1
     volumes:
       - <same path to RPMs output>:/data
-  fc44:
-    container_name: spotify-fc44-releases
-    image: zicstardust/spotify-rpm-packager:fc44
+  beta:
+    container_name: spotify-fedora-beta-releases
+    image: zicstardust/spotify-rpm-packager:fc-beta
     environment:
-      TZ: America/New_York
       DISABLE_WEB_SERVER: 1
     volumes:
       - <same path to RPMs output>:/data
-  el9:
-    container_name: spotify-el9-releases
-    image: zicstardust/spotify-rpm-packager:el9
+  rawhide:
+    container_name: spotify-rawhide-releases
+    image: zicstardust/spotify-rpm-packager:rawhide
     environment:
-      TZ: America/New_York
+      DISABLE_WEB_SERVER: 1
+    volumes:
+      - <same path to RPMs output>:/data
+  el10:
+    container_name: spotify-el10-releases
+    image: zicstardust/spotify-rpm-packager:el10
+    environment:
       DISABLE_WEB_SERVER: 1
     volumes:
       - <same path to RPMs output>:/data
