@@ -5,3 +5,4 @@ rpmbuild
 data/
 *.rpm
 gpg/
+.env

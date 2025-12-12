@@ -10,11 +10,7 @@ services:
       dockerfile: dockerfile
       #dockerfile: dockerfile-fc-beta
       #dockerfile: dockerfile-fc-rawhide
-    environment:
-      - INTERVAL=5m
-      - DISABLE_WEB_SERVER=0
-      - GPG_NAME=Zic Stardust
-      - GPG_EMAIL=me@zicstardust.com
+    env_file: .env
     ports:
       - 80:80
     volumes:
