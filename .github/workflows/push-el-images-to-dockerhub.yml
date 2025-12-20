@@ -7,6 +7,7 @@ on:
       - scripts/**
       - dockerfile-el**
       - entrypoint.sh
+      - .github/workflows/push-el-images-to-dockerhub.yml
 
   pull_request:
     branches: [ "main" ]
@@ -14,6 +15,7 @@ on:
       - scripts/**
       - dockerfile-el**
       - entrypoint.sh
+      - .github/workflows/push-el-images-to-dockerhub.yml
 
 env:
   PLATAFORM_ARCH: linux/amd64
@@ -25,29 +27,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      -
-        name: Checkout
-        uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v6
       
-      -
-        name: Login to Docker Hub
+      - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Set up QEMU
+          
+      - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
         
-      -
-        name: Set up Docker Buildx
+      - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
         with:
           platforms: ${{ env.PLATAFORM_ARCH }}
                 
 
-      -
-        name: Build and push - Enterprise Linux 8
+      - name: Build and push - Enterprise Linux 8
         uses: docker/build-push-action@v6
         with:
           context: .
@@ -56,8 +54,7 @@ jobs:
           push: true
           tags: ${{ env.CONTAINER_REPO }}:el8
 
-      -
-        name: Build and push - Enterprise Linux 9
+      - name: Build and push - Enterprise Linux 9
         uses: docker/build-push-action@v6
         with:
           context: .
@@ -66,8 +63,7 @@ jobs:
           push: true
           tags: ${{ env.CONTAINER_REPO }}:el9
 
-      -
-        name: Build and push - Enterprise Linux 10
+      - name: Build and push - Enterprise Linux 10
         uses: docker/build-push-action@v6
         with:
           context: .
