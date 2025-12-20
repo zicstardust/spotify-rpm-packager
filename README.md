@@ -7,11 +7,9 @@ Designed for simplicity and reliability, this generator helps users maintain up-
 
 [GitHub](https://github.com/zicstardust/spotify-rpm-packager)
 
-[Docker Hub](https://hub.docker.com/r/zicstardust/spotify-rpm-packager)
 
-
-
-## Tags
+## Container
+### Tags
 
 | Tag | Architecture | Description |
 | :----: | :----: |--- |
@@ -24,13 +22,19 @@ Designed for simplicity and reliability, this generator helps users maintain up-
 | [`el`, `el10`](https://github.com/zicstardust/spotify-rpm-packager/blob/main/dockerfile-el10) | amd64 | Create a Spotify package for RHEL 10 derivatives |
 
 
+### Registries
+| Registry | Full image name | Description |
+| :----: | :----: | :----: |
+| [`docker.io`](https://hub.docker.com/r/zicstardust/spotify-rpm-packager) | `docker.io/zicstardust/spotify-rpm-packager` | Docker Hub |
+| [`ghcr.io`](https://github.com/zicstardust/spotify-rpm-packager/pkgs/container/spotify-rpm-packager) | `ghcr.io/zicstardust/spotify-rpm-packager` | GitHub |
+
 ## Usage
-### docker-compose
+### Compose
 ```
 services:
   spotify-rpm:
     container_name: spotify-rpm-packager
-    image: zicstardust/spotify-rpm-packager:latest
+    image: docker.io/zicstardust/spotify-rpm-packager:latest
     environment:
       TZ: America/New_York
     ports:
