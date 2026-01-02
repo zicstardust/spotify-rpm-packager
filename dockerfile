@@ -24,7 +24,6 @@ COPY scripts/download_deb.py \
 COPY entrypoint.sh /entrypoint.sh
 
 RUN chmod -R +x /home/spotify/rpmbuild/SOURCES/*.sh /usr/local/bin/* /entrypoint.sh; \
-    dnf -y update && \
     dnf -y install \
     desktop-file-utils \
     python3 \
