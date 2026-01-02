@@ -1,21 +1,21 @@
-name: Push images Enterorise Linux to ghcr.io
+name: Push image to ghcr.io
 
 on:
   push:
     branches: [ "main" ]
     paths:
       - scripts/**
-      - dockerfile-el**
+      - dockerfile
       - entrypoint.sh
-      - .github/workflows/push-el-images-to-ghrc.yml
+      - .github/workflows/push-to-ghrc.yml
 
   pull_request:
     branches: [ "main" ]
     paths:
       - scripts/**
-      - dockerfile-el**
+      - dockerfile
       - entrypoint.sh
-      - .github/workflows/push-el-images-to-ghrc.yml
+      - .github/workflows/push-to-ghrc.yml
 
 env:
   BUILDX_NO_DEFAULT_ATTESTATIONS: 1
@@ -47,31 +47,11 @@ jobs:
           platforms: ${{ env.PLATAFORM_ARCH }}
           #driver-opts: image=moby/buildkit:master
                 
-      - name: Build and push - Enterprise Linux 8
+      - name: Build and push
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: dockerfile-el8
+          file: dockerfile
           platforms: ${{ env.PLATAFORM_ARCH }}
           push: true
-          tags: ${{ env.CONTAINER_REPO }}:el8
-
-      - name: Build and push - Enterprise Linux 9
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: dockerfile-el9
-          platforms: ${{ env.PLATAFORM_ARCH }}
-          push: true
-          tags: ${{ env.CONTAINER_REPO }}:el9
-
-      - name: Build and push - Enterprise Linux 10
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: dockerfile-el10
-          platforms: ${{ env.PLATAFORM_ARCH }}
-          push: true
-          tags: |
-            ${{ env.CONTAINER_REPO }}:el
-            ${{ env.CONTAINER_REPO }}:el10
+          tags: ${{ env.CONTAINER_REPO }}:latest

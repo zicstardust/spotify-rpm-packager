@@ -1,21 +1,21 @@
-name: Push images Enterprise Linux to docker hub
+name: Push image to docker hub
 
 on:
   push:
     branches: [ "main" ]
     paths:
       - scripts/**
-      - dockerfile-el**
+      - dockerfile
       - entrypoint.sh
-      - .github/workflows/push-el-images-to-dockerhub.yml
+      - .github/workflows/push-to-dockerhub.yml
 
   pull_request:
     branches: [ "main" ]
     paths:
       - scripts/**
-      - dockerfile-el**
+      - dockerfile
       - entrypoint.sh
-      - .github/workflows/push-el-images-to-dockerhub.yml
+      - .github/workflows/push-to-dockerhub.yml
 
 env:
   PLATAFORM_ARCH: linux/amd64
@@ -45,32 +45,13 @@ jobs:
           platforms: ${{ env.PLATAFORM_ARCH }}
                 
 
-      - name: Build and push - Enterprise Linux 8
+      - name: Build and push
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: dockerfile-el8
+          file: dockerfile
           platforms: ${{ env.PLATAFORM_ARCH }}
           push: true
-          tags: ${{ env.CONTAINER_REPO }}:el8
+          tags: ${{ env.CONTAINER_REPO }}:latest
 
-      - name: Build and push - Enterprise Linux 9
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: dockerfile-el9
-          platforms: ${{ env.PLATAFORM_ARCH }}
-          push: true
-          tags: ${{ env.CONTAINER_REPO }}:el9
-
-      - name: Build and push - Enterprise Linux 10
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: dockerfile-el10
-          platforms: ${{ env.PLATAFORM_ARCH }}
-          push: true
-          tags: |
-            ${{ env.CONTAINER_REPO }}:el
-            ${{ env.CONTAINER_REPO }}:el10
           
