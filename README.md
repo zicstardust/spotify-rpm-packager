@@ -10,10 +10,10 @@ Designed for simplicity and reliability, this generator helps users maintain up-
 
 ## Container
 ### Tags
-Attention: The container supports ARM64 architecture, but the generated RPM is for X86_64.
-| Tag | Architecture | Description |
-| :----: | :----: |--- |
-| [`latest`](https://github.com/zicstardust/spotify-rpm-packager/blob/main/dockerfile) | X86_64, arm64 | Default Tag |
+
+| Tag | Description |
+| :----: |--- |
+| [`latest`](https://github.com/zicstardust/spotify-rpm-packager/blob/main/dockerfile) | Default Tag |
 
 
 ### Registries
@@ -21,6 +21,16 @@ Attention: The container supports ARM64 architecture, but the generated RPM is f
 | :----: | :----: | :----: |
 | [`docker.io`](https://hub.docker.com/r/zicstardust/spotify-rpm-packager) | `docker.io/zicstardust/spotify-rpm-packager` | Docker Hub |
 | [`ghcr.io`](https://github.com/zicstardust/spotify-rpm-packager/pkgs/container/spotify-rpm-packager) | `ghcr.io/zicstardust/spotify-rpm-packager` | GitHub |
+
+
+### Supported Architectures
+Attention: The container supports others architectures, but the generated RPM is only for amd64.
+| Architecture | Available | Tag |
+| :----: | :----: | ---- |
+| amd64 | ✅ | latest |
+| arm64 | ✅ | latest |
+| ppc64le | ✅ | latest |
+| s390x | ✅ | latest |
 
 ## Usage
 ### Compose
