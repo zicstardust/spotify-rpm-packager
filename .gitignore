@@ -1,5 +1,6 @@
 spotify-client*
 spotify.info
+spotify.version
 __pycache__
 rpmbuild
 data/
