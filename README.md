@@ -35,6 +35,7 @@ services:
   spotify-rpm:
     container_name: spotify-rpm-packager
     image: docker.io/zicstardust/spotify-rpm-packager:latest
+    privileged: True
     environment:
       TZ: America/New_York
     ports:
@@ -74,18 +75,31 @@ Exemple `/etc/yum.repos.d/spotify.repo` file
 ### without GPG
 ```
 [spotify]
-name=Spotify - $releasever
+name=Spotify - $releasever - $basearch
 baseurl=http://127.0.0.1/$releasever/$basearch/stable
 enabled=1
+gpgcheck=0
+
+[spotify-source]
+name=Spotify - Source
+baseurl=http://127.0.0.1/src/source/stable
+enabled=0
 gpgcheck=0
 ```
 
 ### with GPG
 ```
 [spotify]
-name=Spotify - $releasever
+name=Spotify - $releasever - $basearch
 baseurl=http://127.0.0.1/$releasever/$basearch/stable
 enabled=1
+gpgcheck=1
+gpgkey=http://127.0.0.1/gpg
+
+[spotify-source]
+name=Spotify - Source
+baseurl=http://127.0.0.1/src/source/stable
+enabled=0
 gpgcheck=1
 gpgkey=http://127.0.0.1/gpg
 ```

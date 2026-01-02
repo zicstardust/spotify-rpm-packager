@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 export GPG_TTY=$(tty)
 
@@ -24,31 +24,26 @@ fi
 
 while :
 do
-    python3 /build/download_deb.py
-    /build/build_rpm.sh
+    download_deb.py
+    build_rpm_src.sh
 
 
     #copy RPM
     echo "copy RPM to /data"
-    /build/copy_rpm_to_repo.sh
+    copy_rpm_to_repo.sh
     
 
     #cleanup
-    echo "cleanup..."
-    rm -f /build/spotify.info
-    rm -Rf /build/spotify*.deb
-    rm -f /build/data.tar.gz
-    rm -f /build/control.tar.gz
-    rm -f /build/debian-binary
-    rm -Rf /build/usr
-
-    rm -Rf /home/spotify/rpmbuild
+    cleanup.sh
 
     if [ "$DISABLE_WEB_SERVER" != "1" ]; then
         echo "update metadata repository..."
         for i in $(ls /data); do
-            createrepo /data/$i/x86_64/stable
+            if [ "$i" != "src" ]; then
+                createrepo /data/$i/x86_64/stable
+            fi
         done
+            createrepo /data/src/source/stable
     fi
 
 

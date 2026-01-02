@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -e
 
 : "${PUID:=1000}"
@@ -21,7 +21,7 @@ fi
 
 if [ "$GPG_NAME" ] && [ "$GPG_EMAIL" ]; then
     if [ ! -f /gpg-key/private.pgp ] && [ ! -f /gpg-key/public.pgp ]; then
-        /build/gpg-gen.sh
+        gpg-gen.sh
     fi
 
     rpm --import /gpg-key/public.pgp
@@ -29,6 +29,6 @@ fi
 
 mkdir -p /data /home/spotify /gpg-key
 
-chown -R spotify:spotify /build /data /home/spotify /gpg-key
+chown -R spotify:spotify /data /home/spotify /gpg-key
 
 exec runuser -u spotify -- "$@"
