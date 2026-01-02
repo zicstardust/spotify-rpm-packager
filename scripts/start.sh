@@ -16,7 +16,7 @@ if [ "$GPG_NAME" ] && [ "$GPG_EMAIL" ]; then
 %_gpg_name ${GPG_NAME}
 %_gpgbin /usr/bin/gpg
 RPMMACROS
-    #rpm --import /gpg-key/public.pgp
+
     gpg --export -a "${GPG_EMAIL}" > /data/gpg
 
 fi
@@ -25,12 +25,12 @@ fi
 while :
 do
     python3 /build/download_deb.py
-    python3 /build/build_rpm.py
+    /build/build_rpm.sh
 
 
     #copy RPM
     echo "copy RPM to /data"
-    python3 /build/copy_rpm_to_repo.py
+    /build/copy_rpm_to_repo.sh
     
 
     #cleanup
