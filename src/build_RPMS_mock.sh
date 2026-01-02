@@ -13,25 +13,25 @@ mock_config(){
 
     if [ "$distro" == "fc42" ]; then
         mock_config_file="fedora-42-x86_64"
-        repofolder="42"
+        releasever="42"
     elif [ "$distro" == "fc43" ]; then
         mock_config_file="fedora-43-x86_64"
-        repofolder="43"
+        releasever="43"
     elif [ "$distro" == "fc44" ]; then
         mock_config_file="fedora-44-x86_64"
-        repofolder="44"
+        releasever="44"
     elif [ "$distro" == "rawhide" ]; then
         mock_config_file="fedora-rawhide-x86_64"
-        repofolder="44"
+        releasever="44"
     elif [ "$distro" == "el8" ]; then
         mock_config_file="alma+epel-8-x86_64"
-        repofolder="8"
+        releasever="8"
     elif [ "$distro" == "el9" ]; then
         mock_config_file="alma+epel-9-x86_64"
-        repofolder="9"
+        releasever="9"
     elif [ "$distro" == "el10" ]; then
         mock_config_file="alma+epel-10-x86_64"
-        repofolder="10"
+        releasever="10"
     else
         echo "BUILD: ${distro} invalid!"
         exit 1
@@ -41,7 +41,7 @@ mock_config(){
     if [ "$config" == "mock_config_file" ]; then
         echo $mock_config_file
     elif [ "$config" == "releasever" ]; then
-        echo $repofolder
+        echo $releasever
     fi
 }
 
