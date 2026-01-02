@@ -1,18 +1,12 @@
 services:
   spotify-rpm:
     container_name: rpm-spotify-package-generator
-    image: rpm-spotify-package-generator
-    build:
-      #dockerfile: dockerfile-el8
-      #dockerfile: dockerfile-el9
-      #dockerfile: dockerfile-el10
-      #dockerfile: dockerfile-fc-previous
-      dockerfile: dockerfile
-      #dockerfile: dockerfile-fc-beta
-      #dockerfile: dockerfile-fc-rawhide
+    image: rpm-spotify-package-generator:latest
+    build: .
     env_file: .env
+    privileged: True
     ports:
-      - 80:80
+      - 8080:8080
     volumes:
       - ./data:/data
       - ./gpg:/gpg-key

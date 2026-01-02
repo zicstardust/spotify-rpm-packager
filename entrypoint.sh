@@ -12,6 +12,7 @@ if ! id -u spotify >/dev/null 2>&1; then
     useradd -m -u "$PUID" -g "$PGID" -s /sbin/nologin spotify
 fi
 
+usermod -a -G mock spotify
 
 
 if [ "$DISABLE_WEB_SERVER" != "1" ]; then
