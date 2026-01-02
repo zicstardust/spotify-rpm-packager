@@ -29,6 +29,12 @@ fi
 
 mkdir -p /data /home/spotify /gpg-key
 
+mkdir -p /home/spotify/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
+
+mv /SOURCES/*.sh  /home/spotify/rpmbuild/SOURCES/
+
+rm -Rf /SOURCES
+
 chown -R spotify:spotify /data /home/spotify /gpg-key
 
 exec runuser -u spotify -- "$@"

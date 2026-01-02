@@ -1,8 +1,8 @@
 # Spotify RPM Packager
 
-A lightweight tool that automates the creation of RPM packages for Spotify. It downloads the latest Spotify release, applies necessary adjustments for system compatibility, and bundles everything into a clean RPM package ready for installation on RPM-based Linux distributions such as Fedora and RHEL derivatives.
+A tool that automates the creation of RPM packages for Spotify. It downloads the latest Spotify release from debian repository, applies necessary adjustments for system compatibility, and bundles everything into a clean RPM package ready for installation on RPM-based Linux distributions such as Fedora and RHEL derivatives.
 
-Designed for simplicity and reliability, this generator helps users maintain up-to-date Spotify installations without relying on unofficial or outdated repositories.
+Designed for simplicity and reliability, this generator helps users maintain up-to-date Spotify installations without relying on outdated repositories.
 
 
 [GitHub](https://github.com/zicstardust/spotify-rpm-packager)
@@ -13,13 +13,7 @@ Designed for simplicity and reliability, this generator helps users maintain up-
 
 | Tag | Architecture | Description |
 | :----: | :----: |--- |
-| [`latest`, `fc43`](https://github.com/zicstardust/spotify-rpm-packager/blob/main/dockerfile) | amd64 | Create a Spotify package for the latest stable version of Fedora. |
-| [`fc-previous`, `fc42`](https://github.com/zicstardust/spotify-rpm-packager/blob/main/dockerfile-fc-previous) | amd64 | Create a Spotify package for the previous stable version of Fedora. |
-| [`fc-beta`,`fc44`](https://github.com/zicstardust/spotify-rpm-packager/blob/main/dockerfile-fc-beta) | amd64 | Create a Spotify package for Fedora Beta. |
-| [`rawhide`](https://github.com/zicstardust/spotify-rpm-packager/blob/main/dockerfile-fc-rawhide) | amd64 | Create a Spotify package for Fedora Rawhide. |
-| [`el8`](https://github.com/zicstardust/spotify-rpm-packager/blob/main/dockerfile-el8) | amd64 | Create a Spotify package for RHEL 8 derivatives |
-| [`el9`](https://github.com/zicstardust/spotify-rpm-packager/blob/main/dockerfile-el9) | amd64 | Create a Spotify package for RHEL 9 derivatives |
-| [`el`, `el10`](https://github.com/zicstardust/spotify-rpm-packager/blob/main/dockerfile-el10) | amd64 | Create a Spotify package for RHEL 10 derivatives |
+| [`latest`](https://github.com/zicstardust/spotify-rpm-packager/blob/main/dockerfile) | amd64 | Default Tag |
 
 
 ### Registries
@@ -41,20 +35,32 @@ services:
     ports:
       - 80:80
     volumes:
-      - <path to RPMs output>:/data
+      - <path to Repository/RPMs output>:/data
       - <path to GPG key>:/gpg-key #Required to backup generate GPG key
 ```
 
-## Environment variables
+### Environment variables
 
-| variables | Function | Default |
-| :----: | --- | --- |
-| `TZ` | Set Timezone | |
-| `PUID` | Set UID | 1000 |
-| `PGID` | Set GID | 1000 |
-| `INTERVAL` | Set the interval to check for updates and generate the next RPM. | `1d` |
-| `DISABLE_WEB_SERVER` | Set `1` to disable web server repository | `0` |
+| variables | Function | Default | Exemple |
+| :----: | --- | --- | --- |
+| `TZ` | Set Timezone | | |
+| `PUID` | Set UID | 1000 | |
+| `PGID` | Set GID | 1000 | |
+| `INTERVAL` | Set the interval to check for updates and generate the next RPM. | `1d` | `1d - 1 day`<br/>`10m - 10 minutes`<br/>`1w - 1 week`<br/>`65s - 65 seconds` |
+| `DISABLE_WEB_SERVER` | Set `1` to disable web server repository | `0` | |
+| `BUILD` | Set for which distros the RPM will be generated. Separated by `,` | `fc43` | `fc43,el10,rawhide` |
 
+
+### Set BUILD
+| Value | Function | 
+| :----: | --- | 
+| `fc42` | Generate RPM for fedora 42 |
+| `fc43` | Generate RPM for fedora 43 |
+| `fc44` | Generate RPM for fedora 44 |
+| `rawhide` | Generate RPM for fedora rawhide |
+| `el8` | Generate RPM for RHEL 8 like |
+| `el9` | Generate RPM for RHEL 9 like |
+| `el10` | Generate RPM for RHEL 10 like |
 
 
 ### GPG Sign
@@ -67,8 +73,11 @@ Environment variables required to use GPG
 
 
 ## Repository Web Server
+Recommended to use a proxy with https.
 
-## On client
+If you don't want to use the repository, just directly install the generated RPM
+
+### On client
 
 Exemple `/etc/yum.repos.d/spotify.repo` file
 
@@ -82,7 +91,7 @@ gpgcheck=0
 
 [spotify-source]
 name=Spotify - Source
-baseurl=http://127.0.0.1/src/source/stable
+baseurl=http://127.0.0.1/$releasever/source/SRPMS
 enabled=0
 gpgcheck=0
 ```
@@ -98,7 +107,7 @@ gpgkey=http://127.0.0.1/gpg
 
 [spotify-source]
 name=Spotify - Source
-baseurl=http://127.0.0.1/src/source/stable
+baseurl=http://127.0.0.1/$releasever/source/SRPMS
 enabled=0
 gpgcheck=1
 gpgkey=http://127.0.0.1/gpg
@@ -106,51 +115,6 @@ gpgkey=http://127.0.0.1/gpg
 ### Install:
 ```
 sudo dnf install spotify-client
-```
-
-## Multiple release repository
-Example of repository with a single web server for FC stable, previous stable, beta, rawhide and EL 10.
-```
-services:
-  stable:
-    container_name: spotify-fedora-stable-releases
-    image: zicstardust/spotify-rpm-packager:latest
-    environment:
-      GPG_NAME: Exemple
-      GPG_EMAIL: me@exemple.com
-    ports:
-      - 80:80
-    volumes:
-      - <path to RPMs output>:/data
-      - <path to GPG key>:/gpg-key
-  previous:
-    container_name: spotify-fedora-previous-releases
-    image: zicstardust/spotify-rpm-packager:fc-previous
-    environment:
-      DISABLE_WEB_SERVER: 1
-    volumes:
-      - <same path to RPMs output>:/data
-  beta:
-    container_name: spotify-fedora-beta-releases
-    image: zicstardust/spotify-rpm-packager:fc-beta
-    environment:
-      DISABLE_WEB_SERVER: 1
-    volumes:
-      - <same path to RPMs output>:/data
-  rawhide:
-    container_name: spotify-rawhide-releases
-    image: zicstardust/spotify-rpm-packager:rawhide
-    environment:
-      DISABLE_WEB_SERVER: 1
-    volumes:
-      - <same path to RPMs output>:/data
-  el10:
-    container_name: spotify-el10-releases
-    image: zicstardust/spotify-rpm-packager:el10
-    environment:
-      DISABLE_WEB_SERVER: 1
-    volumes:
-      - <same path to RPMs output>:/data
 ```
 
 

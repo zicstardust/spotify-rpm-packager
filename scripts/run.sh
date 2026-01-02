@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+releasever=$(python3 -c 'import dnf, json; db = dnf.dnf.Base(); data = json.loads(json.dumps(db.conf.substitutions, indent=2)); print(data["releasever"])')
 export GPG_TTY=$(tty)
 
 #GPG Key
@@ -25,27 +26,10 @@ fi
 while :
 do
     download_deb.py
-    build_rpm_src.sh
 
-
-    #copy RPM
-    echo "copy RPM to /data"
-    copy_rpm_to_repo.sh
+    build_SRPMS.sh $releasever
     
-
-    #cleanup
     cleanup.sh
-
-    if [ "$DISABLE_WEB_SERVER" != "1" ]; then
-        echo "update metadata repository..."
-        for i in $(ls /data); do
-            if [ "$i" != "src" ]; then
-                createrepo /data/$i/x86_64/stable
-            fi
-        done
-            createrepo /data/src/source/stable
-    fi
-
 
     #Start interval
     echo "Start INTERVAL: ${INTERVAL}"

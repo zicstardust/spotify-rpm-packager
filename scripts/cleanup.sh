@@ -17,4 +17,5 @@ rm -Rf /home/spotify/rpmbuild/SOURCES/spotify-client-*.tar.gz
 rm -Rf /home/spotify/rpmbuild/SPECS/*
 rm -Rf /home/spotify/rpmbuild/SRPMS/*
 
-#mkdir -p /home/spotify/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
+
+#rm -Rf /var/lib/mock/*
