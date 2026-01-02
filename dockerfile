@@ -6,7 +6,7 @@ ENV DISABLE_WEB_SERVER=0
 ENV BUILD=fc43
 
 
-COPY scripts/SOURCES/* /SOURCES/
+COPY scripts/RPM_SOURCES/* /SOURCES/
 
 COPY scripts/download_deb.py \
     scripts/gpg-gen.sh \
