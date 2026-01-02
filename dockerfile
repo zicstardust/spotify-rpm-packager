@@ -6,15 +6,15 @@ ENV DISABLE_WEB_SERVER=0
 ENV BUILD=fc43
 
 
-COPY scripts/RPM_SOURCES/* /SOURCES/
+COPY src/RPM_SOURCES/* /SOURCES/
 
-COPY scripts/download_deb.py \
-    scripts/gpg-gen.sh \
-    scripts/generate_spec.sh \
-    scripts/build_SRPMS.sh \
-    scripts/build_RPMS_mock.sh \
-    scripts/run.sh \
-    scripts/cleanup.sh \
+COPY src/download_deb.py \
+    src/gpg-gen.sh \
+    src/generate_spec.sh \
+    src/build_SRPMS.sh \
+    src/build_RPMS_mock.sh \
+    src/run.sh \
+    src/cleanup.sh \
     /usr/local/bin/
 
 COPY entrypoint.sh /entrypoint.sh
