@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
 echo "Generating GPG key..."
 
 gpg --batch --gen-key <<EOF
