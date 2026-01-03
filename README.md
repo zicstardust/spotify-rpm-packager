@@ -83,8 +83,8 @@ If they do not exist, a new key will be created and exported to the `/gpg-key/pr
 
 | variables | Function | Default |
 | :----: | --- | --- |
-| `GPG_NAME` | Your Name | |
-| `GPG_EMAIL` | Your E-mail | |
+| `GPG_NAME` | Your GPG key Name | |
+| `GPG_EMAIL` | Your GPG key E-mail | |
 
 
 
@@ -97,7 +97,7 @@ If you don't want to use the repository, just directly install the generated RPM
 
 Exemple `/etc/yum.repos.d/spotify.repo` file
 
-### without GPG
+#### without GPG
 ```
 [spotify]
 name=Spotify - $releasever - $basearch
@@ -112,7 +112,7 @@ enabled=0
 gpgcheck=0
 ```
 
-### with GPG
+#### with GPG
 ```
 [spotify]
 name=Spotify - $releasever - $basearch
