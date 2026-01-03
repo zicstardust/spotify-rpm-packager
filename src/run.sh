@@ -11,13 +11,6 @@ if [ "$GPG_NAME" ] && [ "$GPG_EMAIL" ]; then
     gpg --import /gpg-key/private.pgp
     gpg --import /gpg-key/public.pgp
     
-
-    cat > "/home/spotify/.rpmmacros" << RPMMACROS
-%_signature gpg
-%_gpg_name ${GPG_NAME}
-%_gpgbin /usr/bin/gpg
-RPMMACROS
-
     gpg --export -a "${GPG_EMAIL}" > /data/gpg
 
 fi

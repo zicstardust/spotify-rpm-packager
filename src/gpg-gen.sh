@@ -18,3 +18,11 @@ mkdir -p /gpg-key
 
 gpg --export -a "${GPG_EMAIL}" > /gpg-key/public.pgp
 gpg --export-secret-keys -a "${GPG_EMAIL}" > /gpg-key/private.pgp
+
+rpm --import /gpg-key/public.pgp
+
+cat > "/home/spotify/.rpmmacros" << RPMMACROS
+%_signature gpg
+%_gpg_name ${GPG_NAME}
+%_gpgbin /usr/bin/gpg
+RPMMACROS
