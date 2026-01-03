@@ -49,7 +49,7 @@ mock_config(){
 for item in "${distros[@]}"; do
     mock -r $(mock_config mock_config_file $item) --rebuild $srpms_file
 
-    if [[ -v $GPG_NAME ]] && [[ -v $GPG_EMAIL ]]; then
+    if [ "$GPG_NAME" ] && [ "$GPG_EMAIL" ]; then
         echo "Sign RPMs files..."
         rpm --addsign /var/lib/mock/$(mock_config mock_config_file $item)/result/spotify-client-${spotify_version}*.x86_64.rpm
         rpm --addsign /var/lib/mock/$(mock_config mock_config_file $item)/result/spotify-client-${spotify_version}*.src.rpm
