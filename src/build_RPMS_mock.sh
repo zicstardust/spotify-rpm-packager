@@ -47,10 +47,11 @@ mock_config(){
 
 
 for item in "${distros[@]}"; do
-    mock -r $(mock_config mock_config_file $item) --rebuild $srpms_file
+    echo "Building spotify-client:${spotify_version} to $(mock_config mock_config_file $item)..."
+    mock -r $(mock_config mock_config_file $item) --rebuild $srpms_file &> /dev/null
 
     if [ "$GPG_NAME" ] && [ "$GPG_EMAIL" ]; then
-        echo "Sign RPMs files..."
+        echo "Signing RPMs spotify-client:${spotify_version} to $(mock_config mock_config_file $item)..."
         rpm --addsign /var/lib/mock/$(mock_config mock_config_file $item)/result/spotify-client-${spotify_version}*.x86_64.rpm
         rpm --addsign /var/lib/mock/$(mock_config mock_config_file $item)/result/spotify-client-${spotify_version}*.src.rpm
     fi
@@ -58,11 +59,12 @@ for item in "${distros[@]}"; do
 
     mkdir -p /data/$(mock_config releasever $item)/x86_64/stable/Packages/
     cp /var/lib/mock/$(mock_config mock_config_file $item)/result/spotify-client-${spotify_version}*.x86_64.rpm /data/$(mock_config releasever $item)/x86_64/stable/Packages/
-
-    createrepo /data/$(mock_config releasever $item)/x86_64/stable/
+    createrepo /data/$(mock_config releasever $item)/x86_64/stable/ &> /dev/null
 
 
     mkdir -p /data/$(mock_config releasever $item)/source/SRPMS/Packages/
     cp /var/lib/mock/$(mock_config mock_config_file $item)/result/spotify-client-${spotify_version}*.src.rpm /data/$(mock_config releasever $item)/source/SRPMS/Packages/
-    createrepo /data/$(mock_config releasever $item)/source/SRPMS/
+    createrepo /data/$(mock_config releasever $item)/source/SRPMS/ &> /dev/null
+
+    echo "Finish: spotify-client:${spotify_version} to $(mock_config mock_config_file $item)!"
 done

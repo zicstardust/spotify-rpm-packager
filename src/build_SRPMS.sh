@@ -23,8 +23,8 @@ echo "Create spec file"
 generate_spec.sh ${BUILD_DIR}/SPECS/spotify.spec $spotify_version
 
 
-echo "building SRPM..."
-rpmbuild -bs --define "_topdir ${BUILD_DIR}" ${BUILD_DIR}/SPECS/spotify.spec
+echo "Building SRPMS spotify-client:${spotify_version}..."
+rpmbuild -bs --define "_topdir ${BUILD_DIR}" ${BUILD_DIR}/SPECS/spotify.spec &> /dev/null
 
 cd $current_dir
 
