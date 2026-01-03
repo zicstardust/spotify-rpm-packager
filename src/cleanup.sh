@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
 echo "cleanup..."
-rm -f /tmp/spotify.info
-rm -f /tmp/spotify.version
+#rm -f /tmp/spotify.info
+#rm -f /tmp/spotify.version
+rm -f /tmp/spotify.version.old
+mv /tmp/spotify.version /tmp/spotify.version.old
 rm -Rf /tmp/spotify*.deb
 rm -Rf /tmp/spotify*.tar.gz
 rm -Rf /tpm/spotify-client*

@@ -23,13 +23,21 @@ RPMMACROS
 fi
 
 
+
+
 while :
 do
-    download_deb.py
-
-    build_SRPMS.sh $releasever
+    check_latest_version.sh
     
-    cleanup.sh
+    if [ "$(cat /tmp/spotify.version 2> /dev/null)" != "$(cat /tmp/spotify.version.old 2> /dev/null)" ]; then
+        echo "New version found!"
+        download_deb.sh
+        build_SRPMS.sh $releasever
+        cleanup.sh
+    else
+        echo "No new version found, skip"
+    fi
+
 
     #Start interval
     echo "Start INTERVAL: ${INTERVAL}"

@@ -1,6 +1,5 @@
 FROM fedora:43
 
-ENV PYTHONUNBUFFERED=1
 ENV INTERVAL=1d
 ENV DISABLE_WEB_SERVER=0
 ENV BUILD=fc43
@@ -8,7 +7,8 @@ ENV BUILD=fc43
 
 COPY src/RPM_SOURCES/* /SOURCES/
 
-COPY src/download_deb.py \
+COPY src/download_deb.sh \
+    src/check_latest_version.sh \
     src/gpg-gen.sh \
     src/generate_spec.sh \
     src/build_SRPMS.sh \
