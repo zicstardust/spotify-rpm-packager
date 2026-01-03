@@ -19,12 +19,12 @@ do
     check_latest_version.sh
     
     if [ "$(cat /tmp/spotify.version 2> /dev/null)" != "$(cat /tmp/spotify.version.old 2> /dev/null)" ]; then
-        echo "New version found!"
+        echo "New .deb version found!"
         download_deb.sh
         build_SRPMS.sh $releasever
         cleanup.sh
     else
-        echo "No new version found, skip"
+        echo "New .deb version not found, skip"
     fi
 
 

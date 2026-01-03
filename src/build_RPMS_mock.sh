@@ -47,8 +47,13 @@ mock_config(){
 
 
 for item in "${distros[@]}"; do
-    echo "Building spotify-client:${spotify_version} to $(mock_config mock_config_file $item)..."
-    mock -r $(mock_config mock_config_file $item) --rebuild $srpms_file &> /dev/null
+    if [ -e "$(ls /data/$(mock_config releasever $item)/x86_64/stable/Packages/spotify-client-${spotify_version}*.x86_64.rpm 2> /dev/null)" ]; then
+        echo "spotify-client:${spotify_version} RPM to $(mock_config mock_config_file $item) exists, skip"
+        continue
+    else
+        echo "Building spotify-client:${spotify_version} to $(mock_config mock_config_file $item)..."
+        mock -r $(mock_config mock_config_file $item) --rebuild $srpms_file &> /dev/null
+    fi
 
     if [ "$GPG_NAME" ] && [ "$GPG_EMAIL" ]; then
         echo "Signing RPMs spotify-client:${spotify_version} to $(mock_config mock_config_file $item)..."
