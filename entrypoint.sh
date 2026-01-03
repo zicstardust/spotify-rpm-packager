@@ -29,8 +29,9 @@ fi
 
 if [ "$GPG_NAME" ] && [ "$GPG_EMAIL" ]; then
     if [ ! -f /gpg-key/private.pgp ] && [ ! -f /gpg-key/public.pgp ]; then
-        gpg-gen.sh
+        generate_gpg.sh
     fi
+    rpm --import /gpg-key/public.pgp
 fi
 
 chown -R spotify:spotify /data /home/spotify /gpg-key

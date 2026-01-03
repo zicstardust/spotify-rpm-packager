@@ -9,6 +9,8 @@ if [ "$GPG_NAME" ] && [ "$GPG_EMAIL" ]; then
     gpg --import /gpg-key/public.pgp
     
     gpg --export -a "${GPG_EMAIL}" > /data/gpg
+
+    set_rpmmacros.sh
 fi
 
 

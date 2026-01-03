@@ -74,7 +74,13 @@ services:
 
 
 ### GPG Sign
-Environment variables required to use GPG
+To sign RPMs, it is necessary to set `GPG_NAME` and `GPG_EMAIL` environment variables.
+
+The key will be imported from `/gpg-key/private.pgp` and `/gpg-key/public.pgp`.
+
+If they do not exist, a new key will be created and exported to the `/gpg-key/private.pgp` and `/gpg-key/public.pgp`.
+
+
 | variables | Function | Default |
 | :----: | --- | --- |
 | `GPG_NAME` | Your Name | |
