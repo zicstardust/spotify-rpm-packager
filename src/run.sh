@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-releasever=$(python3 -c 'import dnf, json; db = dnf.dnf.Base(); data = json.loads(json.dumps(db.conf.substitutions, indent=2)); print(data["releasever"])')
-export GPG_TTY=$(tty)
-
 #GPG Key
 if [ "$GPG_NAME" ] && [ "$GPG_EMAIL" ]; then
+    
+    export GPG_TTY=$(tty)
+
     gpg --import /gpg-key/private.pgp
     gpg --import /gpg-key/public.pgp
     
@@ -23,7 +23,7 @@ do
     if [ "$(cat /tmp/spotify.version 2> /dev/null)" != "$(cat /tmp/spotify.version.old 2> /dev/null)" ]; then
         echo "New .deb version found!"
         download_deb.sh
-        build_SRPMS.sh $releasever
+        build_SRPMS.sh
         cleanup.sh
     else
         echo "New .deb version not found, skip"

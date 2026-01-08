@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-releasever=$1
+releasever=$(python3 -c 'import dnf, json; db = dnf.dnf.Base(); data = json.loads(json.dumps(db.conf.substitutions, indent=2)); print(data["releasever"])')
 current_dir=$(pwd)
 cd /tmp
 spotify_version=$(cat /tmp/spotify.version)
