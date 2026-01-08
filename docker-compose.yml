@@ -1,7 +1,7 @@
 services:
-  spotify-rpm:
-    container_name: rpm-spotify-package-generator
-    image: rpm-spotify-package-generator:latest
+  spotify-rpm-packager:
+    container_name: spotify-rpm-packager
+    image: spotify-rpm-packager:latest
     build: .
     env_file: .env
     privileged: True
