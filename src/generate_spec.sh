@@ -19,12 +19,32 @@ Source2:        generate_desktopentry.sh
 Source3:        generate_man.sh
 Source4:        generate_appdata.sh
 Source5:        generate_bin.sh
+
 BuildRequires:  tar
 BuildRequires:  bash
 
 
+Requires:       glibc
+Requires:       alsa-lib
+Requires:       at-spi2-atk
 Requires:       libatomic
+Requires:       mesa-libgbm
+Requires:       glib2
+Requires:       gtk3
+Requires:       nss
+Requires:       libxshmfence
+Requires:       libXScrnSaver
+Requires:       libXtst
+Requires:       xdg-utils
 Requires:       libayatana-appindicator-gtk3
+
+
+Recommends:       (compat-ffmpeg4 if rpmfusion-free-release else ffmpeg-free)
+Recommends:       (ffmpeg-libs if rpmfusion-free-release else (libavcodec-free and libavformat-free))
+
+
+Suggests:       libnotify
+
 
 %description
 Spotify streaming music client.
@@ -59,6 +79,6 @@ chmod -R a+wr %{_datadir}/spotify/ || true
 %{_mandir}/man1/spotify.1*
 
 %changelog
-* $(date +"%a %b %d %Y") Automated Build <builder@localhost> - ${spotify_version}-1
+* $(date +"%a %b %d %Y") Automated Build <${GPG_EMAIL:-builder@localhost}> - ${spotify_version}-1
 - Automated build of Spotify client ${spotify_version}
 SPEC

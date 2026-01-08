@@ -125,8 +125,18 @@ gpgcheck=1
 gpgkey=http://127.0.0.1/gpg
 ```
 ### Install:
-```
+
+```bash
 sudo dnf install spotify-client
+```
+
+
+## Local Files Fix
+
+- Enable [rpmfusion-free](https://rpmfusion.org/Configuration)
+- Install compat-ffmpeg4 and ffmpeg-libs:
+```bash
+sudo dnf install compat-ffmpeg4 ffmpeg-libs --allowerasing
 ```
 
 
