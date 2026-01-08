@@ -4,7 +4,7 @@ destine_dir=$1
 
 mkdir -p ${destine_dir}
 cat > ${destine_dir}/spotify.1 <<"MAN"
-TH SPOTIFY 1 "December 2025" "Spotify Client" "User Commands"
+.TH SPOTIFY 1 "December 2025" "Spotify Client" "User Commands"
 .SH NAME
 spotify \- Spotify streaming music client
 .SH SYNOPSIS
