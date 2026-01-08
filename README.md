@@ -100,13 +100,13 @@ Exemple `/etc/yum.repos.d/spotify.repo` file
 #### without GPG
 ```
 [spotify]
-name=Spotify - $releasever - $basearch
+name=Spotify Unofficial Repository - $basearch
 baseurl=http://127.0.0.1/$releasever/$basearch/stable
 enabled=1
 gpgcheck=0
 
 [spotify-source]
-name=Spotify - Source
+name=Spotify Unofficial Repository - Source
 baseurl=http://127.0.0.1/$releasever/source/SRPMS
 enabled=0
 gpgcheck=0
@@ -115,14 +115,14 @@ gpgcheck=0
 #### with GPG
 ```
 [spotify]
-name=Spotify - $releasever - $basearch
+name=Spotify Unofficial Repository - $basearch
 baseurl=http://127.0.0.1/$releasever/$basearch/stable
 enabled=1
 gpgcheck=1
 gpgkey=http://127.0.0.1/gpg
 
 [spotify-source]
-name=Spotify - Source
+name=Spotify Unofficial Repository - Source
 baseurl=http://127.0.0.1/$releasever/source/SRPMS
 enabled=0
 gpgcheck=1
