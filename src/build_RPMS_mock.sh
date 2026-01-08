@@ -64,11 +64,13 @@ for item in "${distros[@]}"; do
 
     mkdir -p /data/$(mock_config releasever $item)/x86_64/stable/Packages/
     cp /var/lib/mock/$(mock_config mock_config_file $item)/result/spotify-client-${spotify_version}*.x86_64.rpm /data/$(mock_config releasever $item)/x86_64/stable/Packages/
+    remove_old_rpms.sh /data/$(mock_config releasever $item)/x86_64/stable/Packages
     createrepo /data/$(mock_config releasever $item)/x86_64/stable/ &> /dev/null
 
 
     mkdir -p /data/$(mock_config releasever $item)/source/SRPMS/Packages/
     cp /var/lib/mock/$(mock_config mock_config_file $item)/result/spotify-client-${spotify_version}*.src.rpm /data/$(mock_config releasever $item)/source/SRPMS/Packages/
+    remove_old_rpms.sh /data/$(mock_config releasever $item)/source/SRPMS/Packages
     createrepo /data/$(mock_config releasever $item)/source/SRPMS/ &> /dev/null
 
     echo "Finish: spotify-client:${spotify_version} to $(mock_config mock_config_file $item)!"

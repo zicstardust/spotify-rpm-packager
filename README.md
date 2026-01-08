@@ -58,6 +58,7 @@ services:
 | `PGID` | Set GID | 1000 | |
 | `INTERVAL` | Set the interval to check for updates and generate the next RPM. | `1d` | `1d - 1 day`<br/>`10m - 10 minutes`<br/>`1w - 1 week`<br/>`65s - 65 seconds` |
 | `DISABLE_WEB_SERVER` | Set `1` to disable web server repository | `0` | |
+| `KEEP_RPM` | Number of RPM versions saved. If value is `0`, keep all | `0` | |
 | `BUILD` | Set for which distros the RPM will be generated. Separated by `,` | `fc43` | [Look at the set BUILD section](#set-build) |
 | `GPG_NAME` | Your GPG key Name | | [Look at the GPG Sign section](#gpg-sign) |
 | `GPG_EMAIL` | Your GPG key E-mail | | [Look at the GPG Sign section](#gpg-sign) |
