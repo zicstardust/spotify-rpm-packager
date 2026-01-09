@@ -75,7 +75,7 @@ chmod -R a+wr %{_datadir}/spotify/ || true
 %{_datadir}/spotify/
 %{_datadir}/applications/spotify.desktop
 %{_datadir}/icons/hicolor/*/apps/spotify.png
-%{_datadir}/appdata/spotify.xml
+%{_datadir}/appdata/spotify.appdata.xml
 %{_mandir}/man1/spotify.1*
 
 %changelog
