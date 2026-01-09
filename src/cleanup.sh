@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
+SPOTIFY_BRANCH=$1
+
 echo "cleanup..."
-#rm -f /tmp/spotify.info
-#rm -f /tmp/spotify.version
-rm -f /tmp/spotify.version.old
-mv /tmp/spotify.version /tmp/spotify.version.old
+#rm -f /tmp/spotify-client.${SPOTIFY_BRANCH}.Version
+rm -f /tmp/spotify-client.${SPOTIFY_BRANCH}.Version.old
+mv /tmp/spotify-client.${SPOTIFY_BRANCH}.Version /tmp/spotify-client.${SPOTIFY_BRANCH}.Version.old
 rm -Rf /tmp/spotify*.deb
 rm -Rf /tmp/spotify*.tar.gz
 rm -Rf /tpm/spotify-client*

@@ -2,6 +2,7 @@
 
 srpms_file=$1
 spotify_version=$2
+SPOTIFY_BRANCH=$3
 
 set -e
 : "${BUILD:=fc43}"
@@ -50,7 +51,7 @@ mock_config(){
 
 
 for item in "${distros[@]}"; do
-    if [ -e "$(ls /data/$(mock_config releasever $item)/x86_64/stable/Packages/spotify-client-${spotify_version}*.x86_64.rpm 2> /dev/null)" ]; then
+    if [ -e "$(ls /data/$(mock_config releasever $item)/x86_64/${SPOTIFY_BRANCH}/Packages/spotify-client-${spotify_version}*.x86_64.rpm 2> /dev/null)" ]; then
         echo "spotify-client:${spotify_version} RPM to $(mock_config mock_config_file $item) exists, skip"
         continue
     else
@@ -65,16 +66,17 @@ for item in "${distros[@]}"; do
     fi
 
 
-    mkdir -p /data/$(mock_config releasever $item)/x86_64/stable/Packages/
-    cp /var/lib/mock/$(mock_config mock_config_file $item)/result/spotify-client-${spotify_version}*.x86_64.rpm /data/$(mock_config releasever $item)/x86_64/stable/Packages/
-    remove_old_rpms.sh /data/$(mock_config releasever $item)/x86_64/stable/Packages
-    createrepo /data/$(mock_config releasever $item)/x86_64/stable/ &> /dev/null
+    mkdir -p /data/$(mock_config releasever $item)/x86_64/${SPOTIFY_BRANCH}/Packages/
+    cp /var/lib/mock/$(mock_config mock_config_file $item)/result/spotify-client-${spotify_version}*.x86_64.rpm /data/$(mock_config releasever $item)/x86_64/${SPOTIFY_BRANCH}/Packages/
+    remove_old_rpms.sh /data/$(mock_config releasever $item)/x86_64/${SPOTIFY_BRANCH}/Packages
+    createrepo /data/$(mock_config releasever $item)/x86_64/${SPOTIFY_BRANCH}/ &> /dev/null
 
+    if [ "$SRPMS_BUILDS" == "1" ]; then
+        mkdir -p /data/$(mock_config releasever $item)/source/${SPOTIFY_BRANCH}/Packages/
+        cp /var/lib/mock/$(mock_config mock_config_file $item)/result/spotify-client-${spotify_version}*.src.rpm /data/$(mock_config releasever $item)/source/${SPOTIFY_BRANCH}/Packages/
+        remove_old_rpms.sh /data/$(mock_config releasever $item)/source/${SPOTIFY_BRANCH}/Packages
+        createrepo /data/$(mock_config releasever $item)/source/${SPOTIFY_BRANCH}/ &> /dev/null
+    fi
 
-    mkdir -p /data/$(mock_config releasever $item)/source/SRPMS/Packages/
-    cp /var/lib/mock/$(mock_config mock_config_file $item)/result/spotify-client-${spotify_version}*.src.rpm /data/$(mock_config releasever $item)/source/SRPMS/Packages/
-    remove_old_rpms.sh /data/$(mock_config releasever $item)/source/SRPMS/Packages
-    createrepo /data/$(mock_config releasever $item)/source/SRPMS/ &> /dev/null
-
-    echo "Finish: spotify-client:${spotify_version} to $(mock_config mock_config_file $item)!"
+    echo "Finish: spotify-client, branch=${SPOTIFY_BRANCH}, version=${spotify_version} to $(mock_config mock_config_file $item)!"
 done

@@ -62,6 +62,9 @@ services:
 | `BUILD` | Set for which distros the RPM will be generated. Separated by `,` | `fc43` | [Look at the set BUILD section](#set-build) |
 | `GPG_NAME` | Your GPG key Name | | [Look at the GPG Sign section](#gpg-sign) |
 | `GPG_EMAIL` | Your GPG key E-mail | | [Look at the GPG Sign section](#gpg-sign) |
+| `STABLE_BUILDS` | RPM Spotify Stable builds | `1` | |
+| `TESTING_BUILDS` | RPM Spotify Testing builds | `0` | |
+| `SRPMS_BUILDS` | SRPMS builds | `0` | |
 
 
 #### Set BUILD
@@ -97,14 +100,27 @@ Exemple `/etc/yum.repos.d/spotify.repo` file
 #### without GPG
 ```
 [spotify]
-name=Spotify Unofficial Repository - $basearch
+name=Spotify Unofficial Repository - Stable - $basearch
 baseurl=http://127.0.0.1/$releasever/$basearch/stable
 enabled=1
 gpgcheck=0
 
+[spotify-testing]
+name=Spotify Unofficial Repository - Testing - $basearch
+baseurl=http://127.0.0.1/$releasever/$basearch/testing
+enabled=0
+gpgcheck=0
+
 [spotify-source]
-name=Spotify Unofficial Repository - Source
-baseurl=http://127.0.0.1/$releasever/source/SRPMS
+name=Spotify Unofficial Repository - Stable - Source
+baseurl=http://127.0.0.1/$releasever/source/stable
+enabled=0
+gpgcheck=0
+
+
+[spotify-testing-source]
+name=Spotify Unofficial Repository - Testing - Source
+baseurl=http://127.0.0.1/$releasever/source/testing
 enabled=0
 gpgcheck=0
 ```
@@ -112,18 +128,33 @@ gpgcheck=0
 #### with GPG
 ```
 [spotify]
-name=Spotify Unofficial Repository - $basearch
+name=Spotify Unofficial Repository - Stable - $basearch
 baseurl=http://127.0.0.1/$releasever/$basearch/stable
 enabled=1
 gpgcheck=1
-gpgkey=http://127.0.0.1/gpg
+gpgkey=http://127.0.0.1/gp
 
-[spotify-source]
-name=Spotify Unofficial Repository - Source
-baseurl=http://127.0.0.1/$releasever/source/SRPMS
+[spotify-testing]
+name=Spotify Unofficial Repository - Testing - $basearch
+baseurl=http://127.0.0.1/$releasever/$basearch/testing
 enabled=0
 gpgcheck=1
-gpgkey=http://127.0.0.1/gpg
+gpgkey=http://127.0.0.1/gp
+
+[spotify-source]
+name=Spotify Unofficial Repository - Stable - Source
+baseurl=http://127.0.0.1/$releasever/source/stable
+enabled=0
+gpgcheck=1
+gpgkey=http://127.0.0.1/gp
+
+
+[spotify-testing-source]
+name=Spotify Unofficial Repository - Testing - Source
+baseurl=http://127.0.0.1/$releasever/source/testing
+enabled=0
+gpgcheck=1
+gpgkey=http://127.0.0.1/gp
 ```
 ### Install:
 

@@ -5,7 +5,7 @@ COPY src/RPM_SOURCES/* /SOURCES/
 
 COPY src/download_deb.sh \
     src/remove_old_rpms.sh \
-    src/check_latest_version.sh \
+    src/parser_debian_control_file.py \
     src/set_rpmmacros.sh \
     src/generate_gpg.sh \
     src/generate_spec.sh \

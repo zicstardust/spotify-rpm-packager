@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 
+SPOTIFY_BRANCH=$1
+
 releasever=$(python3 -c 'import dnf, json; db = dnf.dnf.Base(); data = json.loads(json.dumps(db.conf.substitutions, indent=2)); print(data["releasever"])')
 current_dir=$(pwd)
 cd /tmp
-spotify_version=$(cat /tmp/spotify.version)
+spotify_version=$(cat /tmp/spotify-client.${SPOTIFY_BRANCH}.Version)
 deb_file="/tmp/spotify-client_${spotify_version}_amd64.deb"
 BUILD_DIR="/home/spotify/rpmbuild"
 SOURCES_DIR="${BUILD_DIR}/SOURCES"
@@ -28,4 +30,4 @@ rpmbuild -bs --define "_topdir ${BUILD_DIR}" ${BUILD_DIR}/SPECS/spotify.spec &> 
 
 cd $current_dir
 
-build_RPMS_mock.sh ${BUILD_DIR}/SRPMS/spotify-client-${spotify_version}-1.fc$releasever.src.rpm $spotify_version
+build_RPMS_mock.sh ${BUILD_DIR}/SRPMS/spotify-client-${spotify_version}-1.fc$releasever.src.rpm $spotify_version $SPOTIFY_BRANCH
