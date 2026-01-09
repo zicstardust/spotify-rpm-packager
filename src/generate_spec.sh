@@ -58,7 +58,7 @@ mkdir -p %{buildroot}/usr/share/spotify/
 cp -ar usr/share/spotify/* %{buildroot}/usr/share/spotify/
 %{_sourcedir}/generate_desktopentry.sh %{buildroot}/usr/share/applications %{version}
 %{_sourcedir}/copy_icons.sh usr/share/spotify/icons %{buildroot}/usr/share/icons
-%{_sourcedir}/generate_appdata.sh %{buildroot}/usr/share/appdata
+%{_sourcedir}/generate_appdata.sh %{buildroot}/usr/share/appdata %{version}
 %{_sourcedir}/generate_man.sh %{buildroot}/usr/share/man/man1
 %{_sourcedir}/generate_bin.sh %{buildroot}/usr/bin
 chmod -R +x %{buildroot}/usr/share/spotify/*.so
@@ -75,7 +75,7 @@ chmod -R a+wr %{_datadir}/spotify/ || true
 %{_datadir}/spotify/
 %{_datadir}/applications/spotify-client.desktop
 %{_datadir}/icons/hicolor/*/apps/spotify.png
-%{_datadir}/appdata/spotify.xml
+%{_datadir}/appdata/spotify-client.xml
 %{_mandir}/man1/spotify.1*
 
 %changelog
