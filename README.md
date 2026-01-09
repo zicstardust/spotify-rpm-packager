@@ -132,21 +132,21 @@ name=Spotify Unofficial Repository - Stable - $basearch
 baseurl=http://127.0.0.1/$releasever/$basearch/stable
 enabled=1
 gpgcheck=1
-gpgkey=http://127.0.0.1/gp
+gpgkey=http://127.0.0.1/gpg
 
 [spotify-testing]
 name=Spotify Unofficial Repository - Testing - $basearch
 baseurl=http://127.0.0.1/$releasever/$basearch/testing
 enabled=0
 gpgcheck=1
-gpgkey=http://127.0.0.1/gp
+gpgkey=http://127.0.0.1/gpg
 
 [spotify-source]
 name=Spotify Unofficial Repository - Stable - Source
 baseurl=http://127.0.0.1/$releasever/source/stable
 enabled=0
 gpgcheck=1
-gpgkey=http://127.0.0.1/gp
+gpgkey=http://127.0.0.1/gpg
 
 
 [spotify-testing-source]
@@ -154,7 +154,7 @@ name=Spotify Unofficial Repository - Testing - Source
 baseurl=http://127.0.0.1/$releasever/source/testing
 enabled=0
 gpgcheck=1
-gpgkey=http://127.0.0.1/gp
+gpgkey=http://127.0.0.1/gpg
 ```
 ### Install:
 
