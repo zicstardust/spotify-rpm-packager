@@ -2,9 +2,9 @@
 
 set -e
 : "${INTERVAL:=1d}"
-: "${STABLE_BUILDS:=1}"
-: "${TESTING_BUILDS:=0}"
-: "${SRPMS_BUILDS:=0}"
+: "${STABLE_BUILDS:=true}"
+: "${TESTING_BUILDS:=false}"
+: "${SRPMS_BUILDS:=false}"
 
 
 export STABLE_BUILDS
@@ -46,13 +46,13 @@ build_RPM(){
 while :
 do
 
-    if [ "$STABLE_BUILDS" == "1" ]; then
+    if [[ "$STABLE_BUILDS" =~ ^(1|true|True|y|Y)$ ]]; then
         build_RPM stable
     else
         echo "Skip build stable RPM"
     fi
 
-    if [ "$TESTING_BUILDS" == "1" ]; then
+    if [[ "$STABLE_BUILDS" =~ ^(1|true|True|y|Y)$ ]]; then
         build_RPM testing
     else
         echo "Skip build testing RPM"

@@ -71,7 +71,7 @@ for item in "${distros[@]}"; do
     remove_old_rpms.sh /data/$(mock_config releasever $item)/x86_64/${SPOTIFY_BRANCH}/Packages
     createrepo /data/$(mock_config releasever $item)/x86_64/${SPOTIFY_BRANCH}/ &> /dev/null
 
-    if [ "$SRPMS_BUILDS" == "1" ]; then
+    if [[ "$SRPMS_BUILDS" =~ ^(1|true|True|y|Y)$ ]]; then
         mkdir -p /data/$(mock_config releasever $item)/source/${SPOTIFY_BRANCH}/Packages/
         cp /var/lib/mock/$(mock_config mock_config_file $item)/result/spotify-client-${spotify_version}*.src.rpm /data/$(mock_config releasever $item)/source/${SPOTIFY_BRANCH}/Packages/
         remove_old_rpms.sh /data/$(mock_config releasever $item)/source/${SPOTIFY_BRANCH}/Packages

@@ -3,7 +3,7 @@ set -e
 
 : "${PUID:=1000}"
 : "${PGID:=1000}"
-: "${DISABLE_WEB_SERVER:=0}"
+: "${DISABLE_WEB_SERVER:=false}"
 
 if ! getent group spotify >/dev/null; then
     groupadd -g "$PGID" spotify
@@ -24,7 +24,7 @@ mv /SOURCES/*.sh  /home/spotify/rpmbuild/SOURCES/
 
 rm -Rf /SOURCES
 
-if [ "$DISABLE_WEB_SERVER" != "1" ]; then
+if [[ "$DISABLE_WEB_SERVER" =~ ^(0|false|False|n|N)$ ]]; then
     httpd &> /dev/null
 fi
 
