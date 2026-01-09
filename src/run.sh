@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+set -e
+: "${INTERVAL:=1d}"
+
+
 #GPG Key
 if [ "$GPG_NAME" ] && [ "$GPG_EMAIL" ]; then
     

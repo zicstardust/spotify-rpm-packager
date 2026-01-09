@@ -3,6 +3,7 @@ set -e
 
 : "${PUID:=1000}"
 : "${PGID:=1000}"
+: "${DISABLE_WEB_SERVER:=0}"
 
 if ! getent group spotify >/dev/null; then
     groupadd -g "$PGID" spotify
