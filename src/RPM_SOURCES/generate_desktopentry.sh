@@ -4,7 +4,7 @@ destine_dir=$1
 version=$2
 
 mkdir -p ${destine_dir}
-cat > ${destine_dir}/spotify-client.desktop <<DESKTOP
+cat > ${destine_dir}/spotify.desktop <<DESKTOP
 [Desktop Entry]
 Type=Application
 Name=Spotify

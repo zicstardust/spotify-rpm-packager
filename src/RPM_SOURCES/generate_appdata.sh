@@ -4,12 +4,12 @@ destine_dir=$1
 spotify_version=$2
 
 mkdir -p ${destine_dir}
-cat > ${destine_dir}/spotify-client.xml <<APPDATA
+cat > ${destine_dir}/spotify.xml <<APPDATA
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop">
-  <id>spotify-client</id>
-  <provides><id>spotify-client.desktop</id></provides>
-  <launchable type="desktop-id">spotify-client.desktop</launchable>
+  <id>spotify</id>
+  <provides><id>spotify.desktop</id></provides>
+  <launchable type="desktop-id">spotify.desktop</launchable>
   <name>Spotify</name>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>LicenseRef-proprietary=https://www.spotify.com/us/legal/end-user-agreement/</project_license>
