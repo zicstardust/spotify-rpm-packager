@@ -3,16 +3,16 @@
 package_dir=$1
 
 set -e
-: "${KEEP_RPM:=0}"
+: "${KEEP_VERSIONS:=0}"
 
-if [ "${KEEP_RPM}" ==  "0" ]; then
+if [ "${KEEP_VERSIONS}" ==  "0" ]; then
     exit 0
 fi
 
 list_RPMs=($(ls ${package_dir}/))
 
-if [ ${#list_RPMs[@]} -gt $KEEP_RPM ]; then
-    delete_files_length=$((${#list_RPMs[@]}-$KEEP_RPM))
+if [ ${#list_RPMs[@]} -gt $KEEP_VERSIONS ]; then
+    delete_files_length=$((${#list_RPMs[@]}-$KEEP_VERSIONS))
 
     i=0
     for file in "${list_RPMs[@]}"; do
