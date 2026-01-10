@@ -13,6 +13,7 @@ Release:        1%{?dist}
 Summary:        Spotify desktop client
 License:        Proprietary
 URL:            https://www.spotify.com/
+ExclusiveArch:  x86_64
 Source0:        spotify-client-%{version}.tar.gz
 Source1:        copy_icons.sh
 Source2:        generate_desktopentry.sh
