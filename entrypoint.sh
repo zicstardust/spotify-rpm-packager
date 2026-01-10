@@ -20,7 +20,7 @@ mkdir -p /data /home/spotify /gpg-key
 
 mkdir -p /home/spotify/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
 
-mv /SOURCES/*.sh  /home/spotify/rpmbuild/SOURCES/
+mv /SOURCES/*  /home/spotify/rpmbuild/SOURCES/
 
 rm -Rf /SOURCES
 
