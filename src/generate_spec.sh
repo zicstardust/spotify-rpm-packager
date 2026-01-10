@@ -15,7 +15,7 @@ License:        Proprietary
 URL:            https://www.spotify.com/
 ExclusiveArch:  x86_64
 Source0:        spotify-client-%{version}.tar.gz
-Source1:        spotify-client.svg
+Source1:        copy_icons.sh
 Source2:        generate_desktopentry.sh
 Source3:        generate_man.sh
 Source4:        generate_appdata.sh
@@ -58,8 +58,7 @@ Spotify streaming music client.
 mkdir -p %{buildroot}/usr/share/spotify/
 cp -ar usr/share/spotify/* %{buildroot}/usr/share/spotify/
 %{_sourcedir}/generate_desktopentry.sh %{buildroot}/usr/share/applications %{version}
-mkdir -p %{buildroot}/usr/share/icons/hicolor/scalable/apps
-cp -ar %{_sourcedir}/spotify-client.svg %{buildroot}/usr/share/icons/hicolor/scalable/apps/
+%{_sourcedir}/copy_icons.sh usr/share/spotify/icons %{buildroot}/usr/share/icons
 %{_sourcedir}/generate_appdata.sh %{buildroot}/usr/share/appdata %{version}
 %{_sourcedir}/generate_man.sh %{buildroot}/usr/share/man/man1
 %{_sourcedir}/generate_bin.sh %{buildroot}/usr/bin
@@ -77,6 +76,7 @@ chmod -R a+wr %{_datadir}/spotify/ || true
 %{_datadir}/spotify/
 %{_datadir}/applications/spotify.desktop
 %{_datadir}/icons/hicolor/scalable/apps/spotify-client.svg
+%{_datadir}/icons/hicolor/*/apps/spotify-client.png
 %{_datadir}/appdata/spotify.appdata.xml
 %{_mandir}/man1/spotify.1*
 
