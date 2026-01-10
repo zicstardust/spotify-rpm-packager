@@ -4,14 +4,6 @@ FROM fedora:43
 COPY src/RPM_SOURCES/* /SOURCES/
 
 
-COPY src/RPM_SOURCES/generate_appdata.sh \
-    src/RPM_SOURCES/generate_bin.sh \
-    src/RPM_SOURCES/generate_desktopentry.sh \
-    src/RPM_SOURCES/generate_man.sh \
-    src/RPM_SOURCES/spotify-client.svg \
-    /SOURCES/
-
-
 COPY src/download_deb.sh \
     src/remove_old_rpms.sh \
     src/parser_debian_control_file.py \
