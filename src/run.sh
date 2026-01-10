@@ -52,7 +52,7 @@ do
         echo "Skip build stable RPM"
     fi
 
-    if [[ "$STABLE_BUILDS" =~ ^(1|true|True|y|Y)$ ]]; then
+    if [[ "$TESTING_BUILDS" =~ ^(1|true|True|y|Y)$ ]]; then
         build_RPM testing
     else
         echo "Skip build testing RPM"
