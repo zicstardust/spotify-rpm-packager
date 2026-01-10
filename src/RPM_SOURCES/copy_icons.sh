@@ -5,8 +5,8 @@ destine_dir=$2
 
 
 #Scalable icon
-mkdir -p ${destine_dir}/hicolor/scalable/apps
-curl -fSL "https://raw.githubusercontent.com/flathub/com.spotify.Client/refs/heads/master/com.spotify.Client.svg" -o ${destine_dir}/hicolor/scalable/apps/spotify-client.svg
+#mkdir -p ${destine_dir}/hicolor/scalable/apps
+#curl -fSL "https://raw.githubusercontent.com/flathub/com.spotify.Client/refs/heads/master/com.spotify.Client.svg" -o ${destine_dir}/hicolor/scalable/apps/spotify-client.svg
 
 
 # Tradicional icons

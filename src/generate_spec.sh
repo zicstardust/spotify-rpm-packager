@@ -20,6 +20,7 @@ Source2:        generate_desktopentry.sh
 Source3:        generate_man.sh
 Source4:        generate_appdata.sh
 Source5:        generate_bin.sh
+Source6:        spotify-client.svg
 
 BuildRequires:  tar
 BuildRequires:  bash
@@ -59,6 +60,8 @@ mkdir -p %{buildroot}/usr/share/spotify/
 cp -ar usr/share/spotify/* %{buildroot}/usr/share/spotify/
 %{_sourcedir}/generate_desktopentry.sh %{buildroot}/usr/share/applications %{version}
 %{_sourcedir}/copy_icons.sh usr/share/spotify/icons %{buildroot}/usr/share/icons
+mkdir -p %{buildroot}/usr/share/icons/hicolor/scalable/apps
+cp -ar %{_sourcedir}/spotify-client.svg %{buildroot}/usr/share/icons/hicolor/scalable/apps/
 %{_sourcedir}/generate_appdata.sh %{buildroot}/usr/share/appdata %{version}
 %{_sourcedir}/generate_man.sh %{buildroot}/usr/share/man/man1
 %{_sourcedir}/generate_bin.sh %{buildroot}/usr/bin
