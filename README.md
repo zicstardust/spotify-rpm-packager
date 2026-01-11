@@ -2,10 +2,15 @@
 
 A tool that automates the creation of RPM packages for Spotify. It downloads the latest Spotify release from debian repository, applies necessary adjustments for system compatibility, and bundles everything into a clean RPM package ready for installation on RPM-based Linux distributions such as Fedora and RHEL derivatives.
 
+Includes a repository web server for automatic Spotify updates.
+
 Designed for simplicity and reliability, this generator helps users maintain up-to-date Spotify installations without relying on outdated repositories.
 
-
 [GitHub](https://github.com/zicstardust/spotify-rpm-packager)
+
+
+## If you don't want to run a repository web server, [just directly install the generated RPMs](https://github.com/zicstardust/spotify-rpm-packager/releases)
+
 
 
 ## Container
@@ -91,8 +96,6 @@ If they do not exist, a new key will be created and exported to the `/gpg-key/pr
 
 ## Repository Web Server
 Recommended to use a proxy with https.
-
-If you don't want to use the repository, just directly install the generated RPM
 
 ### On client
 
