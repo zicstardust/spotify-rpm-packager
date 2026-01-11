@@ -2,7 +2,12 @@
 
 SPOTIFY_BRANCH=$1
 
-ffmpeg_spotify_release="1.0" #https://github.com/zicstardust/ffmpeg-spotify/releases
+#https://github.com/zicstardust/ffmpeg-spotify/releases
+if [ "$SPOTIFY_BRANCH" == "stable" ]; then
+    ffmpeg_spotify_release="1.0"
+elif [ "$SPOTIFY_BRANCH" == "testing" ]; then
+    ffmpeg_spotify_release="1.0"
+fi
 
 releasever=$(python3 -c 'import dnf, json; db = dnf.dnf.Base(); data = json.loads(json.dumps(db.conf.substitutions, indent=2)); print(data["releasever"])')
 current_dir=$(pwd)
