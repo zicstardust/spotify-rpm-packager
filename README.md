@@ -65,6 +65,7 @@ services:
 | `STABLE_BUILDS` | RPM Spotify Stable builds | `true` | |
 | `TESTING_BUILDS` | RPM Spotify Testing builds | `false` | |
 | `SRPMS_BUILDS` | SRPMS builds | `false` | |
+| `BUILTIN_FFMPEG` | Built-in FFMPEG Libraries | `true` | |
 
 
 #### Set BUILD
@@ -163,17 +164,24 @@ sudo dnf install spotify-client
 ```
 
 
-## General Issues
+## Common Issues
 
-### Local Files Fix
+### Local files don't play
+
+Enable built-in FFMPEG Libraries on RPM build (`BUILTIN_FFMPEG`=true)
+
+<details>
+<summary> Or alternative: </summary>
+
 
 - Enable [rpmfusion-free](https://rpmfusion.org/Configuration)
 - Install compat-ffmpeg4 and ffmpeg-libs:
 ```sh
 sudo dnf install compat-ffmpeg4 ffmpeg-libs --allowerasing
 ```
+</details>
 
-### Force Device Scale Factor
+### Incorrect device scaling factor
 use launch option `--force-device-scale-factor`, default value is `1`
 ```sh
 #exemple scale factor 1.5

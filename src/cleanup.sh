@@ -13,6 +13,7 @@ rm -f /tmp/data.tar.gz
 rm -f /tmp/control.tar.gz
 rm -f /tmp/debian-binary
 rm -Rf /tmp/usr
+rm -f /tmp/ffmpeg_libs.tar.gz
 
 rm -Rf /home/spotify/rpmbuild/BUILD/*
 rm -Rf /home/spotify/rpmbuild/RPMS/*

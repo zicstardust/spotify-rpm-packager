@@ -5,11 +5,13 @@ set -e
 : "${STABLE_BUILDS:=true}"
 : "${TESTING_BUILDS:=false}"
 : "${SRPMS_BUILDS:=false}"
+: "${BUILTIN_FFMPEG:=true}"
 
 
 export STABLE_BUILDS
 export TESTING_BUILDS
 export SRPMS_BUILDS
+export BUILTIN_FFMPEG
 
 #GPG Key
 if [ "$GPG_NAME" ] && [ "$GPG_EMAIL" ]; then

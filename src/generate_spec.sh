@@ -3,6 +3,15 @@
 SPEC_FILE=$1
 spotify_version=$2
 
+
+if [[ "$BUILTIN_FFMPEG" =~ ^(1|true|True|y|Y)$ ]]; then
+    RECOMMENDS_FFMPEG1=""
+    RECOMMENDS_FFMPEG2=""
+else
+    RECOMMENDS_FFMPEG1="Recommends:       (compat-ffmpeg4 if rpmfusion-free-release else ffmpeg-free)"
+    RECOMMENDS_FFMPEG2="Recommends:       (ffmpeg-libs if rpmfusion-free-release else (libavcodec-free and libavformat-free))"
+fi
+
 cat > ${SPEC_FILE} <<SPEC
 %global debug_package %{nil}
 %global __strip /bin/true
@@ -41,9 +50,8 @@ Requires:       xdg-utils
 Requires:       libayatana-appindicator-gtk3
 
 
-Recommends:       (compat-ffmpeg4 if rpmfusion-free-release else ffmpeg-free)
-Recommends:       (ffmpeg-libs if rpmfusion-free-release else (libavcodec-free and libavformat-free))
-
+$RECOMMENDS_FFMPEG1
+$RECOMMENDS_FFMPEG2
 
 Suggests:       libnotify
 
@@ -64,7 +72,7 @@ mkdir -p %{buildroot}/usr/share/icons/hicolor/scalable/apps
 cp -ar %{_sourcedir}/spotify-client.svg %{buildroot}/usr/share/icons/hicolor/scalable/apps/
 %{_sourcedir}/generate_appdata.sh %{buildroot}/usr/share/appdata %{version}
 %{_sourcedir}/generate_man.sh %{buildroot}/usr/share/man/man1
-%{_sourcedir}/generate_bin.sh %{buildroot}/usr/bin
+%{_sourcedir}/generate_bin.sh %{buildroot}/usr/bin $BUILTIN_FFMPEG
 chmod -R +x %{buildroot}/usr/share/spotify/*.so
 rm -Rf %{buildroot}/usr/share/spotify/icons
 rm -f %{buildroot}/usr/share/spotify/spotify.desktop
