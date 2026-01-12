@@ -6,7 +6,7 @@ services:
     env_file: .env
     privileged: True
     ports:
-      - 80:80
+      - ${PORT:-80}:${PORT:-80}
     volumes:
       - ./data:/data
       - ./gpg:/gpg-key
