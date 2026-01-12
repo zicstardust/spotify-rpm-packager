@@ -35,6 +35,7 @@ BuildRequires:  tar
 BuildRequires:  bash
 
 
+Requires:       bash
 Requires:       glibc
 Requires:       alsa-lib
 Requires:       at-spi2-atk
