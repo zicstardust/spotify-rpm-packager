@@ -4,9 +4,6 @@ srpms_file=$1
 spotify_version=$2
 SPOTIFY_BRANCH=$3
 
-set -e
-: "${BUILD:=fc43}"
-
 
 IFS="," read -ra distros <<< "$BUILD"
 
