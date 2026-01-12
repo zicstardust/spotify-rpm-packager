@@ -24,6 +24,9 @@ mv /SOURCES/*  /home/spotify/rpmbuild/SOURCES/
 
 rm -Rf /SOURCES
 
+
+sed -i "s|Listen 80|Listen ${PORT:-80}|" /etc/httpd/conf/httpd.conf
+
 if [[ "$DISABLE_WEB_SERVER" =~ ^(0|false|False|n|N)$ ]]; then
     httpd &> /dev/null
 fi

@@ -71,6 +71,7 @@ services:
 | `TESTING_BUILDS` | RPM Spotify Testing builds | `false` | |
 | `SRPMS_BUILDS` | SRPMS builds | `false` | |
 | `BUILTIN_FFMPEG` | Built-in FFMPEG Libraries | `true` | |
+| `PORT` | Repository Web Server Port  | `80` | |
 
 
 #### Set BUILD
