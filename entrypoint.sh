@@ -20,14 +20,13 @@ mkdir -p /data /home/spotify /gpg-key
 
 mkdir -p /home/spotify/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
 
-mv /SOURCES/*  /home/spotify/rpmbuild/SOURCES/
-
-rm -Rf /SOURCES
-
-
-sed -i "s|Listen 80|Listen ${PORT:-80}|" /etc/httpd/conf/httpd.conf
+if [ -d "/SOURCES" ]; then
+    mv /SOURCES/*  /home/spotify/rpmbuild/SOURCES/
+    rm -Rf /SOURCES
+fi
 
 if [[ "$DISABLE_WEB_SERVER" =~ ^(0|false|False|n|N)$ ]]; then
+    sed -i "s|Listen 80|Listen ${PORT:-80}|" /etc/httpd/conf/httpd.conf
     httpd &> /dev/null
 fi
 
