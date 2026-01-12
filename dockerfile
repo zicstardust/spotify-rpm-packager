@@ -1,4 +1,4 @@
-FROM fedora:43
+FROM almalinux:10.1
 
 
 COPY src/RPM_SOURCES/* /SOURCES/
@@ -17,6 +17,9 @@ COPY src/download_deb.sh \
     /usr/local/bin/
 
 COPY entrypoint.sh /entrypoint.sh
+
+RUN dnf install -y epel-release; \
+    dnf -y update
 
 RUN chmod -R +x /SOURCES/*.sh /usr/local/bin/* /entrypoint.sh; \
     dnf -y install \

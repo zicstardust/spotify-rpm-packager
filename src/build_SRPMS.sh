@@ -9,7 +9,7 @@ elif [ "$SPOTIFY_BRANCH" == "testing" ]; then
     ffmpeg_spotify_release="1.0"
 fi
 
-releasever=$(python3 -c 'import dnf, json; db = dnf.dnf.Base(); data = json.loads(json.dumps(db.conf.substitutions, indent=2)); print(data["releasever"])')
+#releasever=$(python3 -c 'import dnf, json; db = dnf.dnf.Base(); data = json.loads(json.dumps(db.conf.substitutions, indent=2)); print(data["releasever"])')
 current_dir=$(pwd)
 cd /tmp
 spotify_version=$(cat /tmp/spotify-client.${SPOTIFY_BRANCH}.Version)
@@ -47,4 +47,4 @@ rpmbuild -bs --define "_topdir ${BUILD_DIR}" ${BUILD_DIR}/SPECS/spotify.spec &> 
 
 cd $current_dir
 
-build_RPMS_mock.sh ${BUILD_DIR}/SRPMS/spotify-client-${spotify_version}-1.fc$releasever.src.rpm $spotify_version $SPOTIFY_BRANCH
+build_RPMS_mock.sh $(ls ${BUILD_DIR}/SRPMS/spotify-client-${spotify_version}*.src.rpm) $spotify_version $SPOTIFY_BRANCH
