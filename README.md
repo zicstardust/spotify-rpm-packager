@@ -80,7 +80,6 @@ services:
 | `fc43` | Generate RPM for fedora 43 |
 | `fc44` | Generate RPM for fedora 44 |
 | `rawhide` | Generate RPM for fedora rawhide |
-| `el8` | Generate RPM for RHEL 8 like |
 | `el9` | Generate RPM for RHEL 9 like |
 | `el10` | Generate RPM for RHEL 10 like |
 
