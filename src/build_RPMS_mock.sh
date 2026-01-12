@@ -27,9 +27,6 @@ mock_config(){
     elif [ "$distro" == "rawhide" ]; then
         mock_config_file="fedora-rawhide-x86_64"
         releasever="44"
-    elif [ "$distro" == "el9" ]; then
-        mock_config_file="alma+epel-9-x86_64"
-        releasever="9"
     elif [ "$distro" == "el10" ]; then
         mock_config_file="alma+epel-10-x86_64"
         releasever="10"
