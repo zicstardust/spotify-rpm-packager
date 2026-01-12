@@ -167,6 +167,14 @@ sudo dnf install spotify-client
 
 ## Common Issues
 
+### Dependencies not found in EL 10 (RHEL, Almalinux, Oracle Linux, Rocky Linux, etc)
+
+It is necessary to activate the EPEL repository.
+
+```sh
+sudo dnf install epel-release
+```
+
 ### Local files don't play
 
 Enable built-in FFMPEG Libraries on RPM build (`BUILTIN_FFMPEG`=true)
