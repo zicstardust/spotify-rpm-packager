@@ -4,16 +4,21 @@ A tool that automates the creation of RPM packages for Spotify. It downloads the
 
 Includes a repository web server for automatic Spotify updates.
 
-Designed for simplicity and reliability, this generator helps users maintain up-to-date Spotify installations without relying on outdated repositories.
+This package includes enhancements and fixes compared to the official .DEB:
+- Built-in FFMPEG libraries for playing local files
+- Persistent flags configuration file
+- Scalable desktop icon
+- Defaults Flags to improve Fedora/RHEL compatibility
+
 
 [GitHub](https://github.com/zicstardust/spotify-rpm-packager)
 
+## Help Section
+- #### If you don't want to run a repository web server, [just directly install the generated RPMs](https://github.com/zicstardust/spotify-rpm-packager/releases)
 
-### If you don't want to run a repository web server, [just directly install the generated RPMs](https://github.com/zicstardust/spotify-rpm-packager/releases)
+- #### [Common Issues](#common-issues)
 
-### [Common Issues](#common-issues)
-
-### [Making flags persistent](#making-flags-persistent)
+- #### [Making flags persistent](#making-flags-persistent)
 
 ## Container info and usage
 
@@ -153,8 +158,10 @@ sudo dnf install spotify-client
 ## Making flags persistent
 
 Flag file `~/.config/spotify/spotify-flags.conf`
+
 Below is an example spotify-flags.conf file that defines the flags --force-device-scale-factor:
 ```conf
+
 ~/.config/spotify/spotify-flags.conf
 
 # This line will be ignored.
@@ -198,7 +205,8 @@ sudo dnf install compat-ffmpeg4 ffmpeg-libs --allowerasing
 <details>
 
 Add `--force-device-scale-factor` to the flags file in `~/.config/spotify/spotify-flags.conf`.
-Default value is `1`
+
+Default value is `1`.
 ```conf
 #exemple scale factor 1.5
 --force-device-scale-factor=1.5
