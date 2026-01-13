@@ -52,7 +52,7 @@ Attention: The container supports others architectures, but the generated RPM is
 
 ## Usage
 ### Compose
-```
+``` yml
 services:
   spotify-rpm:
     container_name: spotify-rpm-packager
@@ -116,7 +116,7 @@ Recommended to use a proxy with https.
 ### .repo File Exemple (with GPG)
 
 #### `/etc/yum.repos.d/spotify.repo`
-```
+``` conf
 [spotify]
 name=Spotify Unofficial Repository - Stable - $basearch
 baseurl=http://127.0.0.1/$releasever/$basearch/stable
