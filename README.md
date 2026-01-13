@@ -9,11 +9,19 @@ Designed for simplicity and reliability, this generator helps users maintain up-
 [GitHub](https://github.com/zicstardust/spotify-rpm-packager)
 
 
-## If you don't want to run a repository web server, [just directly install the generated RPMs](https://github.com/zicstardust/spotify-rpm-packager/releases)
+### If you don't want to run a repository web server, [just directly install the generated RPMs](https://github.com/zicstardust/spotify-rpm-packager/releases)
 
+### [Common Issues](#common-issues)
 
+### [Making flags persistent](#making-flags-persistent)
+
+## Container info and usage
+
+<details>
+<summary> See more </summary>
 
 ## Container
+
 ### Tags
 
 | Tag | Description |
@@ -91,44 +99,18 @@ The key will be imported from `/gpg-key/private.pgp` and `/gpg-key/public.pgp`.
 
 If they do not exist, a new key will be created and exported to the `/gpg-key/private.pgp` and `/gpg-key/public.pgp`.
 
+</details>
 
+## Usage Repository Web Server
 
-## Repository Web Server
+<details>
+<summary> See more </summary>
+
 Recommended to use a proxy with https.
 
-### On client
+### .repo File Exemple (with GPG)
 
-Exemple `/etc/yum.repos.d/spotify.repo` file
-
-#### without GPG
-```
-[spotify]
-name=Spotify Unofficial Repository - Stable - $basearch
-baseurl=http://127.0.0.1/$releasever/$basearch/stable
-enabled=1
-gpgcheck=0
-
-[spotify-testing]
-name=Spotify Unofficial Repository - Testing - $basearch
-baseurl=http://127.0.0.1/$releasever/$basearch/testing
-enabled=0
-gpgcheck=0
-
-[spotify-source]
-name=Spotify Unofficial Repository - Stable - Source
-baseurl=http://127.0.0.1/$releasever/source/stable
-enabled=0
-gpgcheck=0
-
-
-[spotify-testing-source]
-name=Spotify Unofficial Repository - Testing - Source
-baseurl=http://127.0.0.1/$releasever/source/testing
-enabled=0
-gpgcheck=0
-```
-
-#### with GPG
+#### `/etc/yum.repos.d/spotify.repo`
 ```
 [spotify]
 name=Spotify Unofficial Repository - Stable - $basearch
@@ -159,24 +141,42 @@ enabled=0
 gpgcheck=1
 gpgkey=http://127.0.0.1/gpg
 ```
-### Install:
+
+### Install from repostory:
 
 ```bash
 sudo dnf install spotify-client
 ```
 
+</details>
+
+## Making flags persistent
+
+Flag file `~/.config/spotify/spotify-flags.conf`
+Below is an example spotify-flags.conf file that defines the flags --force-device-scale-factor:
+```conf
+~/.config/spotify/spotify-flags.conf
+
+# This line will be ignored.
+--force-device-scale-factor=1.5
+```
 
 ## Common Issues
 
 ### Dependencies not found in EL 10 (RHEL, Almalinux, Oracle Linux, Rocky Linux, etc)
+
+<details>
 
 It is necessary to activate the EPEL repository.
 
 ```sh
 sudo dnf install epel-release
 ```
+</details>
 
 ### Local files don't play
+
+<details>
 
 Enable built-in FFMPEG Libraries on RPM build (`BUILTIN_FFMPEG`=true)
 
@@ -191,13 +191,19 @@ sudo dnf install compat-ffmpeg4 ffmpeg-libs --allowerasing
 ```
 </details>
 
-### Incorrect device scaling factor
-use launch option `--force-device-scale-factor`, default value is `1`
-```sh
-#exemple scale factor 1.5
-spotify --force-device-scale-factor=1.5
-```
+</details>
 
+### Incorrect device scaling factor
+
+<details>
+
+Add `--force-device-scale-factor` to the flags file in `~/.config/spotify/spotify-flags.conf`.
+Default value is `1`
+```conf
+#exemple scale factor 1.5
+--force-device-scale-factor=1.5
+```
+</details>
 
 ## License
 
