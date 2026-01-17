@@ -57,6 +57,7 @@ services:
   spotify-rpm:
     container_name: spotify-rpm-packager
     image: docker.io/zicstardust/spotify-rpm-packager:latest
+    restart: unless-stopped
     privileged: True
     environment:
       TZ: America/New_York
