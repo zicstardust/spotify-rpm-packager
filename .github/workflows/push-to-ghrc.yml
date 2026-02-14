@@ -9,14 +9,6 @@ on:
       - entrypoint.sh
       - .github/workflows/push-to-ghrc.yml
 
-  pull_request:
-    branches: [ "main" ]
-    paths:
-      - src/**
-      - dockerfile
-      - entrypoint.sh
-      - .github/workflows/push-to-ghrc.yml
-
 env:
   BUILDX_NO_DEFAULT_ATTESTATIONS: 1
   PLATAFORM_ARCH: linux/amd64,linux/arm64/v8,linux/ppc64le,linux/s390x
