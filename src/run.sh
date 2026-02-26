@@ -20,8 +20,8 @@ if [ "$GPG_NAME" ] && [ "$GPG_EMAIL" ]; then
     
     export GPG_TTY=$(tty)
 
-    gpg --import /gpg-key/private.pgp
-    gpg --import /gpg-key/public.pgp
+    gpg --import /gpg-key/private.pgp &> /dev/null
+    gpg --import /gpg-key/public.pgp &> /dev/null
     
     gpg --export -a "${GPG_EMAIL}" > /data/gpg
 
