@@ -7,7 +7,7 @@ cat > ${destine_dir}/generate_envs_file.sh <<"FILE"
 
 mkdir -p ${HOME}/.config/spotify
 
-cat > ${HOME}/.config/spotify/spotify-envs.conf <<"ENVS"
+cat > ${HOME}/.config/spotify/spotify.env <<"ENVS"
 #If delete this file, it will be recreated with the default environment variables the next time you run Spotify.
 
 #Defaults environment variables to improve Fedora/RHEL compatibility

@@ -16,7 +16,7 @@ cat > ${destine_dir}/spotify <<EXEC
 
 $EXPORT_FFMPEG
 
-if [ ! -f \${HOME}/.config/spotify/spotify-envs.conf ]; then
+if [ ! -f \${HOME}/.config/spotify/spotify.env ]; then
     /usr/share/spotify/generate_envs_file.sh
 fi
 
@@ -28,7 +28,7 @@ fi
 mapfile -t FLAGS <<< "\$(grep -v -E '^\s*$|^#' "\${HOME}/.config/spotify/spotify-flags.conf")"
 
 
-mapfile -t ENVS <<< "\$(grep -v -E '^\s*$|^#' "\${HOME}/.config/spotify/spotify-envs.conf")"
+mapfile -t ENVS <<< "\$(grep -v -E '^\s*$|^#' "\${HOME}/.config/spotify/spotify.env")"
 
 exec env "\${ENVS[@]}" \\
     /usr/share/spotify/spotify \\
