@@ -38,6 +38,7 @@ BuildRequires:  bash
 
 
 Requires:       bash
+Requires:       grep
 Requires:       glibc
 Requires:       alsa-lib
 Requires:       at-spi2-atk
