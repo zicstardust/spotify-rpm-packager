@@ -30,7 +30,7 @@ mapfile -t FLAGS <<< "\$(grep -v '^#' "\${HOME}/.config/spotify/spotify-flags.co
 
 mapfile -t ENVS <<< "\$(grep -v '^#' "\${HOME}/.config/spotify/spotify-envs.conf")"
 
-exec "\${ENVS[@]}" \\
+exec env "\${ENVS[@]}" \\
     /usr/share/spotify/spotify \\
     "\${FLAGS[@]}" \\
     "\$@"
