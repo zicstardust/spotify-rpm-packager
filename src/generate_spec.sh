@@ -31,6 +31,7 @@ Source4:        generate_appdata.sh
 Source5:        generate_bin.sh
 Source6:        spotify-client.svg
 Source7:        generate_generate_flags_file.sh
+Source8:        generate_generate_envs_file.sh
 
 BuildRequires:  tar
 BuildRequires:  bash
@@ -76,6 +77,7 @@ cp -ar %{_sourcedir}/spotify-client.svg %{buildroot}/usr/share/icons/hicolor/sca
 %{_sourcedir}/generate_man.sh %{buildroot}/usr/share/man/man1
 %{_sourcedir}/generate_bin.sh %{buildroot}/usr/bin $BUILTIN_FFMPEG
 %{_sourcedir}/generate_generate_flags_file.sh %{buildroot}/usr/share/spotify/
+%{_sourcedir}/generate_generate_envs_file.sh %{buildroot}/usr/share/spotify/
 chmod -R +x %{buildroot}/usr/share/spotify/*.so
 rm -Rf %{buildroot}/usr/share/spotify/icons
 rm -f %{buildroot}/usr/share/spotify/spotify.desktop

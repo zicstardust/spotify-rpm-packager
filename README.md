@@ -156,6 +156,19 @@ sudo dnf install spotify-client
 
 </details>
 
+## Making environment variables persistent
+
+Flag file `~/.config/spotify/spotify-envs.conf`
+
+Below is an example spotify-envs.conf file that defines the flags WAYLAND_DISPLAY
+```conf
+
+~/.config/spotify/spotify-envs.conf
+
+# This line will be ignored.
+WAYLAND_DISPLAY=
+```
+
 ## Making flags persistent
 
 Flag file `~/.config/spotify/spotify-flags.conf`

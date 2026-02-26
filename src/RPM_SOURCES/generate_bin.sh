@@ -16,8 +16,10 @@ cat > ${destine_dir}/spotify <<EXEC
 
 $EXPORT_FFMPEG
 
-# Disable hardware acceleration that causes black screen
-export SPOTIFY_CLEAN_CACHE=1
+if [ ! -f \${HOME}/.config/spotify/spotify-envs.conf ]; then
+    /usr/share/spotify/generate_envs_file.sh
+fi
+
 
 if [ ! -f \${HOME}/.config/spotify/spotify-flags.conf ]; then
     /usr/share/spotify/generate_flags_file.sh
@@ -25,7 +27,11 @@ fi
 
 mapfile -t FLAGS <<< "\$(grep -v '^#' "\${HOME}/.config/spotify/spotify-flags.conf")"
 
-exec /usr/share/spotify/spotify \\
+
+mapfile -t ENVS <<< "\$(grep -v '^#' "\${HOME}/.config/spotify/spotify-envs.conf")"
+
+exec "\${ENVS[@]}" \\
+    /usr/share/spotify/spotify \\
     "\${FLAGS[@]}" \\
     "\$@"
 EXEC
