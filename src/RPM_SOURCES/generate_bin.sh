@@ -25,10 +25,10 @@ if [ ! -f \${HOME}/.config/spotify/spotify-flags.conf ]; then
     /usr/share/spotify/generate_flags_file.sh
 fi
 
-mapfile -t FLAGS <<< "\$(grep -v '^#' "\${HOME}/.config/spotify/spotify-flags.conf")"
+mapfile -t FLAGS <<< "\$(grep -v -E '^\s*$|^#' "\${HOME}/.config/spotify/spotify-flags.conf")"
 
 
-mapfile -t ENVS <<< "\$(grep -v '^#' "\${HOME}/.config/spotify/spotify-envs.conf")"
+mapfile -t ENVS <<< "\$(grep -v -E '^\s*$|^#' "\${HOME}/.config/spotify/spotify-envs.conf")"
 
 exec env "\${ENVS[@]}" \\
     /usr/share/spotify/spotify \\
