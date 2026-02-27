@@ -7,8 +7,9 @@ Includes a repository web server for automatic Spotify updates.
 This package includes enhancements and fixes compared to the official .DEB:
 - Built-in FFMPEG libraries for playing local files
 - Persistent flags configuration file
+- Persistent environment variables configuration file
 - Scalable desktop icon
-- Defaults Flags to improve Fedora/RHEL compatibility
+- Defaults flags and environment variables to improve Fedora/RHEL compatibility
 
 
 [GitHub](https://github.com/zicstardust/spotify-rpm-packager)
