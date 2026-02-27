@@ -6,7 +6,7 @@ set -e
 : "${TESTING_BUILDS:=false}"
 : "${SRPMS_BUILDS:=false}"
 : "${BUILTIN_FFMPEG:=true}"
-: "${BUILD:=fc43}"
+: "${BUILD:=el10}"
 
 
 export STABLE_BUILDS

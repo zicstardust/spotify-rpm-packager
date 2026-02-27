@@ -81,7 +81,7 @@ services:
 | `INTERVAL` | Set the interval to check for updates and generate the next RPM. | `1d` | `1d - 1 day`<br/>`10m - 10 minutes`<br/>`1w - 1 week`<br/>`65s - 65 seconds` |
 | `DISABLE_WEB_SERVER` | Disable web server repository | `false` | |
 | `KEEP_VERSIONS` | Number of RPM versions saved. If value is `0`, keep all | `0` | |
-| `BUILD` | Set for which distros the RPM will be generated. Separated by `,` | `fc43` | [Look at the set BUILD section](#set-build) |
+| `BUILD` | Set for which distros the RPM will be generated. Separated by `,` | `el10` | [Look at the set BUILD section](#set-build) |
 | `GPG_NAME` | Your GPG key Name | | [Look at the GPG Sign section](#gpg-sign) |
 | `GPG_EMAIL` | Your GPG key E-mail | | [Look at the GPG Sign section](#gpg-sign) |
 | `STABLE_BUILDS` | RPM Spotify Stable builds | `true` | |
@@ -94,11 +94,9 @@ services:
 #### Set BUILD
 | Value | Function | 
 | :----: | --- | 
-| `fc42` | Generate RPM for fedora 42 |
-| `fc43` | Generate RPM for fedora 43 |
-| `fc44` | Generate RPM for fedora 44 |
-| `rawhide` | Generate RPM for fedora rawhide |
-| `el10` | Generate RPM for RHEL 10 like |
+| `fc<version>` | Generate RPM for fedora, exemple `fc43` to Fedora 43 |
+| `fcrawhide` | Generate RPM for fedora rawhide |
+| `el<version>` | Generate RPM for RHEL like, exemple `el10` to RHEL 10 like  |
 
 
 #### GPG Sign
