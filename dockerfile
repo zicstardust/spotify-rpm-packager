@@ -18,9 +18,11 @@ COPY src/download_deb.sh \
 
 COPY entrypoint.sh /entrypoint.sh
 
-RUN dnf install -y epel-release; \
+RUN chmod -R +x /SOURCES/*.sh /usr/local/bin/* /entrypoint.sh; \
+    \
+    dnf install -y epel-release; \
+    /usr/bin/crb enable; \
     dnf -y update; \
-    chmod -R +x /SOURCES/*.sh /usr/local/bin/* /entrypoint.sh; \
     dnf -y install \
         desktop-file-utils \
         python3 \
@@ -37,6 +39,7 @@ RUN dnf install -y epel-release; \
         rpm-sign \
         mock; \
     dnf clean all; \
+    \
     rm -f /etc/httpd/conf.d/welcome.conf; \
     sed -i "s/User apache/User spotify/" /etc/httpd/conf/httpd.conf; \
     sed -i "s/Group apache/Group spotify/" /etc/httpd/conf/httpd.conf; \
