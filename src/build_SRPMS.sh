@@ -28,7 +28,7 @@ mv usr spotify-client-${spotify_version}
 #Include FFMPEG libraries
 if [[ "$BUILTIN_FFMPEG" =~ ^(1|true|True|y|Y)$ ]]; then
     echo "Including FFMPEG libraries..."
-    curl -fSL "https://github.com/zicstardust/ffmpeg-spotify/releases/download/${ffmpeg_spotify_release}/spotify_ffmpeg_libs_linux_x86_64.tar.gz" -o "/tmp/ffmpeg_libs.tar.gz" &> /dev/null
+    curl -fSL "https://github.com/zicstardust/spotify-debfixes/releases/download/${ffmpeg_spotify_release}/spotify_ffmpeg_libs_linux_x86_64.tar.gz" -o "/tmp/ffmpeg_libs.tar.gz" &> /dev/null
     mkdir -p spotify-client-${spotify_version}/usr/share/spotify/ffmpeg
     tar -xzf /tmp/ffmpeg_libs.tar.gz  -C spotify-client-${spotify_version}/usr/share/spotify/ffmpeg &> /dev/null
 fi
