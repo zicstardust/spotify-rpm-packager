@@ -161,7 +161,7 @@ sudo dnf install spotify-client
 
 Flag file `~/.config/spotify/spotify.env`
 
-Below is an example spotify.env file that defines the flags WAYLAND_DISPLAY
+Below is an example spotify.env file that defines the environment variables WAYLAND_DISPLAY
 ```conf
 
 ~/.config/spotify/spotify.env
