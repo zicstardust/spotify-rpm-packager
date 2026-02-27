@@ -17,9 +17,11 @@ This package includes enhancements and fixes compared to the official .DEB:
 ## Help Section
 - #### If you don't want to run a repository web server, [just directly install the generated RPMs](https://github.com/zicstardust/spotify-rpm-packager/releases)
 
-- #### [Common Issues](#common-issues)
+- #### [Common Issues](#common-issues-1)
 
-- #### [Making flags persistent](#making-flags-persistent)
+- #### [Making environment variables persistent](#making-environment-variables-persistent-1)
+
+- #### [Making flags persistent](#making-flags-persistent-1)
 
 ## Container info and usage
 
@@ -212,6 +214,22 @@ Enable built-in FFMPEG Libraries on RPM build (`BUILTIN_FFMPEG`=true)
 sudo dnf install compat-ffmpeg4 ffmpeg-libs --allowerasing
 ```
 </details>
+
+</details>
+
+### No themed window bar in the GNOME desktop environment on Wayland
+
+<details>
+
+To fix this, add the following lines to the Flag file `~/.config/spotify/spotify-flags.conf`
+
+```conf
+--ozone-platform=x11
+--disable-features=UseOzonePlatform
+```
+
+
+
 
 </details>
 
