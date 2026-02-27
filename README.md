@@ -151,7 +151,7 @@ gpgcheck=1
 gpgkey=http://127.0.0.1/gpg
 ```
 
-### Install from repostory:
+### Install from repository:
 
 ```bash
 sudo dnf install spotify-client
