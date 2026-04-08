@@ -22,7 +22,9 @@ RUN chmod -R +x /SOURCES/*.sh /usr/local/bin/* /entrypoint.sh; \
     \
     dnf install -y epel-release; \
     /usr/bin/crb enable; \
+    \
     dnf -y update; \
+    \
     dnf -y install \
         desktop-file-utils \
         python3 \
