@@ -34,14 +34,15 @@ build_RPM(){
     SPOTIFY_BRANCH=$1
 
     parser_debian_control_file.py $SPOTIFY_BRANCH spotify-client Version
-    
-    if [ "$(cat /tmp/spotify-client.${SPOTIFY_BRANCH}.Version 2> /dev/null)" != "$(cat /tmp/spotify-client.${SPOTIFY_BRANCH}.Version.old 2> /dev/null)" ]; then
+    spotify_version=$(cat /tmp/spotify-client.${SPOTIFY_BRANCH}.Version)
+
+    if [ "$(ls /data/*/*/${SPOTIFY_BRANCH}/Packages/spotify-client-${spotify_version}-1.*.rpm 2> /dev/null)" ]; then
+        echo "New .deb ${SPOTIFY_BRANCH} version not found, skip"
+    else
         echo "New .deb ${SPOTIFY_BRANCH} version found!"
         download_deb.sh $SPOTIFY_BRANCH
         build_SRPMS.sh $SPOTIFY_BRANCH
-        cleanup.sh $SPOTIFY_BRANCH
-    else
-        echo "New .deb ${SPOTIFY_BRANCH} version not found, skip"
+        cleanup.sh
     fi
 }
 

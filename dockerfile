@@ -1,24 +1,11 @@
 FROM almalinux:10.2
 
 
-COPY src/RPM_SOURCES/* /SOURCES/
-
-
-COPY src/download_deb.sh \
-    src/remove_old_rpms.sh \
-    src/parser_debian_control_file.py \
-    src/set_rpmmacros.sh \
-    src/generate_gpg.sh \
-    src/generate_spec.sh \
-    src/build_SRPMS.sh \
-    src/build_RPMS_mock.sh \
-    src/run.sh \
-    src/cleanup.sh \
-    /usr/local/bin/
+COPY src/* /usr/local/bin/
 
 COPY entrypoint.sh /entrypoint.sh
 
-RUN chmod -R +x /SOURCES/*.sh /usr/local/bin/* /entrypoint.sh; \
+RUN chmod -R +x /usr/local/bin/*.sh /usr/local/bin/*.py /entrypoint.sh; \
     \
     dnf install -y epel-release; \
     /usr/bin/crb enable; \

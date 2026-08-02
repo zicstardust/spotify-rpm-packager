@@ -24,14 +24,6 @@ License:        Proprietary
 URL:            https://www.spotify.com/
 ExclusiveArch:  x86_64
 Source0:        spotify-client-%{version}.tar.gz
-Source1:        copy_icons.sh
-Source2:        generate_desktopentry.sh
-Source3:        generate_man.sh
-Source4:        generate_appdata.sh
-Source5:        generate_bin.sh
-Source6:        spotify-client.svg
-Source7:        generate_generate_flags_file.sh
-Source8:        generate_generate_envs_file.sh
 
 BuildRequires:  tar
 BuildRequires:  bash
@@ -68,21 +60,12 @@ Spotify streaming music client.
 %setup
 
 %install
-mkdir -p %{buildroot}/usr/share/spotify/
-cp -ar usr/share/spotify/* %{buildroot}/usr/share/spotify/
-%{_sourcedir}/generate_desktopentry.sh %{buildroot}/usr/share/applications %{version}
-%{_sourcedir}/copy_icons.sh usr/share/spotify/icons %{buildroot}/usr/share/icons
-mkdir -p %{buildroot}/usr/share/icons/hicolor/scalable/apps
-cp -ar %{_sourcedir}/spotify-client.svg %{buildroot}/usr/share/icons/hicolor/scalable/apps/
-%{_sourcedir}/generate_appdata.sh %{buildroot}/usr/share/appdata %{version}
-%{_sourcedir}/generate_man.sh %{buildroot}/usr/share/man/man1
-%{_sourcedir}/generate_bin.sh %{buildroot}/usr/bin $BUILTIN_FFMPEG
-%{_sourcedir}/generate_generate_flags_file.sh %{buildroot}/usr/share/spotify/
-%{_sourcedir}/generate_generate_envs_file.sh %{buildroot}/usr/share/spotify/
+mkdir -p %{buildroot}/
+cp -ar * %{buildroot}/
 chmod -R +x %{buildroot}/usr/share/spotify/*.so
-rm -Rf %{buildroot}/usr/share/spotify/icons
-rm -f %{buildroot}/usr/share/spotify/spotify.desktop
-rm -Rf %{buildroot}/usr/share/spotify/apt-keys
+chmod +x %{buildroot}/usr/share/spotify/generate_flags_file.sh
+chmod +x %{buildroot}/usr/share/spotify/generate_envs_file.sh
+chmod +x %{buildroot}/usr/bin/spotify
 
 %post
 chmod -R a+wr %{_datadir}/spotify/ || true
