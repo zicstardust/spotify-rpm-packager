@@ -3,7 +3,7 @@
 package_dir=$1
 
 set -e
-: "${KEEP_VERSIONS:=0}"
+: "${KEEP_VERSIONS:=2}"
 
 if [ "${KEEP_VERSIONS}" ==  "0" ]; then
     exit 0
