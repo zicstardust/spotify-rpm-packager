@@ -41,7 +41,7 @@ build_RPM(){
     else
         echo "New .deb ${SPOTIFY_BRANCH} version found!"
         download_deb.sh $SPOTIFY_BRANCH $SPOTIFY_VERSION
-        build_SRPMS.sh $SPOTIFY_BRANCH $SPOTIFY_VERSION
+        build_SRPM.sh $SPOTIFY_BRANCH $SPOTIFY_VERSION
         cleanup.sh
     fi
 }
