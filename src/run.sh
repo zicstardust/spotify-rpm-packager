@@ -57,11 +57,7 @@ build_RPM(){
     IFS="," read -ra distros <<< "$BUILD"
 
     for item in "${distros[@]}"; do
-        if [ "$(ls /data/${item}/*/${SPOTIFY_BRANCH}/Packages/spotify-client-${SPOTIFY_VERSION}-1.*.rpm 2> /dev/null)" ]; then
-            echo "spotify-client:${SPOTIFY_VERSION}, branch ${SPOTIFY_BRANCH} RPM to ${item} exists, skip"
-        else
-            build_RPM.sh $(ls ${BUILD_DIR}/SRPMS/spotify-client-${SPOTIFY_VERSION}*.src.rpm) $SPOTIFY_VERSION $SPOTIFY_BRANCH $item
-        fi
+        build_RPM.sh $(ls ${BUILD_DIR}/SRPMS/spotify-client-${SPOTIFY_VERSION}*.src.rpm) $SPOTIFY_VERSION $SPOTIFY_BRANCH $item
     done
 
     cleanup.sh

@@ -121,15 +121,15 @@ Recommended to use a proxy with https.
 #### `/etc/yum.repos.d/spotify.repo`
 ``` conf
 [spotify]
-name=Spotify Unofficial Repository - Stable - $basearch
-baseurl=http://127.0.0.1/$releasever/$basearch/stable
+name=Spotify Unofficial Repository - Stable - x86_64
+baseurl=http://127.0.0.1/$releasever/x86_64/stable
 enabled=1
 gpgcheck=1
 gpgkey=http://127.0.0.1/gpg
 
 [spotify-testing]
-name=Spotify Unofficial Repository - Testing - $basearch
-baseurl=http://127.0.0.1/$releasever/$basearch/testing
+name=Spotify Unofficial Repository - Testing - x86_64
+baseurl=http://127.0.0.1/$releasever/x86_64/testing
 enabled=0
 gpgcheck=1
 gpgkey=http://127.0.0.1/gpg
