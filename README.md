@@ -89,6 +89,7 @@ services:
 | `SRPMS_BUILDS` | SRPMS builds | `false` | |
 | `BUILTIN_FFMPEG` | Built-in FFMPEG Libraries | `true` | |
 | `PORT` | Repository Web Server Port  | `80` | |
+| `LOG_DEBUG` | Verbose log  | `false` | |
 
 
 #### Set BUILD

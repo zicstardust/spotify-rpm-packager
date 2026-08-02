@@ -13,9 +13,6 @@ fi
 current_dir=$(pwd)
 cd /tmp
 deb_file="/tmp/spotify-client_${SPOTIFY_VERSION}_amd64.deb"
-BUILD_DIR="/home/spotify/rpmbuild"
-SOURCES_DIR="${BUILD_DIR}/SOURCES"
-
 
 # Extract .deb
 echo "Extracting .deb..."
@@ -30,9 +27,9 @@ rm -Rf spotify-client-${SPOTIFY_VERSION}/usr/share/spotify/apt-keys
 #Include FFMPEG libraries
 if [[ "$BUILTIN_FFMPEG" =~ ^(1|true|True|y|Y)$ ]]; then
     echo "Including FFMPEG libraries..."
-    curl -fSL "https://github.com/zicstardust/spotify-debfixes/releases/download/${ffmpeg_spotify_release}/spotify_ffmpeg_libs_linux_x86_64.tar.gz" -o "/tmp/ffmpeg_libs.tar.gz" &> /dev/null
+    curl -fSL "https://github.com/zicstardust/spotify-debfixes/releases/download/${ffmpeg_spotify_release}/spotify_ffmpeg_libs_linux_x86_64.tar.gz" -o "/tmp/ffmpeg_libs.tar.gz" $output
     mkdir -p spotify-client-${SPOTIFY_VERSION}/usr/share/spotify/ffmpeg
-    tar -xzf /tmp/ffmpeg_libs.tar.gz  -C spotify-client-${SPOTIFY_VERSION}/usr/share/spotify/ffmpeg &> /dev/null
+    tar -xzf /tmp/ffmpeg_libs.tar.gz  -C spotify-client-${SPOTIFY_VERSION}/usr/share/spotify/ffmpeg $output
 fi
 
 # Generate Desktop Entry
@@ -70,8 +67,7 @@ generate_spec.sh ${BUILD_DIR}/SPECS/spotify.spec $SPOTIFY_VERSION
 
 
 echo "Building SRPMS spotify-client:${SPOTIFY_VERSION}..."
-rpmbuild -bs --define "_topdir ${BUILD_DIR}" ${BUILD_DIR}/SPECS/spotify.spec &> /dev/null
+rpmbuild -bs --define "_topdir ${BUILD_DIR}" ${BUILD_DIR}/SPECS/spotify.spec $output
 
 cd $current_dir
 
-build_RPM.sh $(ls ${BUILD_DIR}/SRPMS/spotify-client-${SPOTIFY_VERSION}*.src.rpm) $SPOTIFY_VERSION $SPOTIFY_BRANCH
