@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 SPEC_FILE=$1
-spotify_version=$2
+SPOTIFY_VERSION=$2
 
 
 if [[ "$BUILTIN_FFMPEG" =~ ^(1|true|True|y|Y)$ ]]; then
@@ -17,7 +17,7 @@ cat > ${SPEC_FILE} <<SPEC
 %global __strip /bin/true
 
 Name:           spotify-client
-Version:        ${spotify_version}
+Version:        ${SPOTIFY_VERSION}
 Release:        1%{?dist}
 Summary:        Spotify desktop client
 License:        Proprietary
@@ -81,6 +81,6 @@ chmod -R a+wr %{_datadir}/spotify/ || true
 %{_mandir}/man1/spotify.1*
 
 %changelog
-* $(date +"%a %b %d %Y") Automated Build <${GPG_EMAIL:-builder@localhost}> - ${spotify_version}-1
-- Automated build of Spotify client ${spotify_version}
+* $(date +"%a %b %d %Y") Automated Build <${GPG_EMAIL:-builder@localhost}> - ${SPOTIFY_VERSION}-1
+- Automated build of Spotify client ${SPOTIFY_VERSION}
 SPEC

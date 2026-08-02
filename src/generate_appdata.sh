@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 destine_dir=$1
-spotify_version=$2
+SPOTIFY_VERSION=$2
 
 mkdir -p ${destine_dir}
 cat > ${destine_dir}/spotify.appdata.xml <<APPDATA
@@ -39,7 +39,7 @@ cat > ${destine_dir}/spotify.appdata.xml <<APPDATA
     </screenshot>
   </screenshots>
   <releases>
-  <release version="${spotify_version}" date="$(date +"%Y-%M-%d")">
+  <release version="${SPOTIFY_VERSION}" date="$(date +"%Y-%M-%d")">
       <description></description>
     </release>
   </release>
