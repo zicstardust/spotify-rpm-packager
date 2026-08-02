@@ -90,6 +90,7 @@ services:
 | `BUILTIN_FFMPEG` | Built-in FFMPEG Libraries | `true` | |
 | `PORT` | Repository Web Server Port  | `80` | |
 | `LOG_DEBUG` | Verbose log  | `false` | |
+| `ENTERPRISE_LINUX_BACKEND` | Backend RPM build to EL builds  | `alma` | [Look at the set ENTERPRISE_LINUX_BACKEND section](#set-enterprise_linux_backend) |
 
 
 #### Set BUILD
@@ -99,6 +100,14 @@ services:
 | `fcrawhide` | Generate RPM for fedora rawhide |
 | `el<version>` | Generate RPM for RHEL like, exemple `el10` to RHEL 10 like  |
 
+
+#### Set ENTERPRISE_LINUX_BACKEND
+| Value | Function | 
+| :----: | --- | 
+| `alma` | Alma Linux |
+| `almalinux-kitten` | Alma Linux Kitten |
+| `rocky` | Rocky Linux |
+| `centos-stream` | CentOS Stream |
 
 #### GPG Sign
 To sign RPMs, it is necessary to set `GPG_NAME` and `GPG_EMAIL` environment variables.

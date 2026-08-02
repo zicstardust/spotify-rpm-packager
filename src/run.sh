@@ -8,6 +8,7 @@ set -e
 : "${BUILTIN_FFMPEG:=true}"
 : "${BUILD:=el10}"
 : "${LOG_DEBUG:=false}"
+: "${ENTERPRISE_LINUX_BACKEND:=alma}"
 
 if [[ "$LOG_DEBUG" =~ ^(1|true|True|y|Y)$ ]]; then
     output=""
@@ -22,6 +23,7 @@ export SRPMS_BUILDS
 export BUILTIN_FFMPEG
 export BUILD
 export output
+export ENTERPRISE_LINUX_BACKEND
 
 export BUILD_DIR="/home/spotify/rpmbuild"
 export SOURCES_DIR="${BUILD_DIR}/SOURCES"

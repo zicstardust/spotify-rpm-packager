@@ -12,7 +12,7 @@ release="${item:2}"
 if [ "$distro" == "fc" ]; then
     mock_file="fedora-${release}-x86_64"
 elif [ "$distro" == "el" ]; then
-    mock_file="alma+epel-${release}-x86_64"
+    mock_file="${ENTERPRISE_LINUX_BACKEND}+epel-${release}-x86_64"
 fi
 
 
