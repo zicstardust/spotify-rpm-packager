@@ -14,20 +14,6 @@ This package includes enhancements and fixes compared to the official .DEB:
 
 [GitHub](https://github.com/zicstardust/spotify-rpm-packager)
 
-## Help Section
-- #### If you don't want to run a repository web server, [just directly install the generated RPMs](https://github.com/zicstardust/spotify-rpm-packager/releases)
-
-- #### [Common Issues](#common-issues-1)
-
-- #### [Making environment variables persistent](#making-environment-variables-persistent-1)
-
-- #### [Making flags persistent](#making-flags-persistent-1)
-
-## Container info and usage
-
-<details>
-<summary> See more </summary>
-
 ## Container
 
 ### Tags
@@ -112,7 +98,6 @@ The key will be imported from `/gpg-key/private.pgp` and `/gpg-key/public.pgp`.
 
 If they do not exist, a new key will be created and exported to the `/gpg-key/private.pgp` and `/gpg-key/public.pgp`.
 
-</details>
 
 ## Usage Repository Web Server
 
@@ -160,10 +145,14 @@ gpgkey=http://127.0.0.1/gpg
 ```bash
 sudo dnf install spotify-client
 ```
-
 </details>
 
-## Making environment variables persistent
+## Usage flags and environment variables persistent
+
+<details>
+<summary> See more </summary>
+
+### Making environment variables persistent
 
 Flag file `~/.config/spotify/spotify.env`
 
@@ -176,7 +165,7 @@ Below is an example spotify.env file that defines the environment variables WAYL
 WAYLAND_DISPLAY=
 ```
 
-## Making flags persistent
+### Making flags persistent
 
 Flag file `~/.config/spotify/spotify-flags.conf`
 
@@ -188,6 +177,8 @@ Below is an example spotify-flags.conf file that defines the flags --force-devic
 # This line will be ignored.
 --force-device-scale-factor=1.5
 ```
+
+</details>
 
 ## Common Issues
 
