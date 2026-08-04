@@ -45,13 +45,9 @@ This package includes enhancements and fixes compared to the official .DEB:
 
 
 ### Supported Architectures
-Attention: The container supports others architectures, but the generated RPM is only for amd64.
 | Architecture | Available | Tag |
 | :----: | :----: | ---- |
 | amd64 | ✅ | latest |
-| arm64 | ✅ | latest |
-| ppc64le | ✅ | latest |
-| s390x | ✅ | latest |
 
 ## Usage
 ### Compose
