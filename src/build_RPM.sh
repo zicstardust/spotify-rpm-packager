@@ -27,7 +27,11 @@ if [ -e "$(ls /data/${release}/x86_64/${SPOTIFY_BRANCH}/Packages/spotify-client-
     exit 0
 else
     echo "Building spotify-client:${SPOTIFY_VERSION} to ${mock_file}..."
-    mock -r ${mock_file} --rebuild $srpms_file $output
+    if [[ "$LOG_DEBUG" =~ ^(1|true|True|y|Y)$ ]]; then
+        mock -r ${mock_file} --rebuild $srpms_file
+    else
+        mock -r ${mock_file} --rebuild $srpms_file &> /dev/null
+    fi
 fi
 
 if [ "$GPG_NAME" ] && [ "$GPG_EMAIL" ]; then
@@ -40,13 +44,21 @@ fi
 mkdir -p /data/${release}/x86_64/${SPOTIFY_BRANCH}/Packages/
 cp /var/lib/mock/${mock_file}/result/spotify-client-${SPOTIFY_VERSION}*.x86_64.rpm /data/${release}/x86_64/${SPOTIFY_BRANCH}/Packages/
 remove_old_rpms.sh /data/${release}/x86_64/${SPOTIFY_BRANCH}/Packages
-createrepo /data/${release}/x86_64/${SPOTIFY_BRANCH}/ $output
+if [[ "$LOG_DEBUG" =~ ^(1|true|True|y|Y)$ ]]; then
+    createrepo /data/${release}/x86_64/${SPOTIFY_BRANCH}/
+else
+    createrepo /data/${release}/x86_64/${SPOTIFY_BRANCH}/ &> /dev/null
+fi
 
 if [[ "$SRPMS_BUILDS" =~ ^(1|true|True|y|Y)$ ]]; then
     mkdir -p /data/${release}/source/${SPOTIFY_BRANCH}/Packages/
     cp /var/lib/mock/${mock_file}/result/spotify-client-${SPOTIFY_VERSION}*.src.rpm /data/${release}/source/${SPOTIFY_BRANCH}/Packages/
     remove_old_rpms.sh /data/${release}/source/${SPOTIFY_BRANCH}/Packages
-    createrepo /data/${release}/source/${SPOTIFY_BRANCH}/ $output
+    if [[ "$LOG_DEBUG" =~ ^(1|true|True|y|Y)$ ]]; then
+        createrepo /data/${release}/source/${SPOTIFY_BRANCH}/
+    else
+        createrepo /data/${release}/source/${SPOTIFY_BRANCH}/ &> /dev/null
+    fi
 fi
 
 echo "Finish: spotify-client, branch=${SPOTIFY_BRANCH}, version=${SPOTIFY_VERSION} to ${mock_file}!"

@@ -10,19 +10,12 @@ set -e
 : "${LOG_DEBUG:=false}"
 : "${ENTERPRISE_LINUX_BACKEND:=alma}"
 
-if [[ "$LOG_DEBUG" =~ ^(1|true|True|y|Y)$ ]]; then
-    output=""
-else
-    output="&> /dev/null"
-fi
-
-
 export STABLE_BUILDS
 export TESTING_BUILDS
 export SRPMS_BUILDS
 export BUILTIN_FFMPEG
 export BUILD
-export output
+export LOG_DEBUG
 export ENTERPRISE_LINUX_BACKEND
 
 export BUILD_DIR="/home/spotify/rpmbuild"
@@ -30,12 +23,16 @@ export SOURCES_DIR="${BUILD_DIR}/SOURCES"
 
 #GPG Key
 if [ "$GPG_NAME" ] && [ "$GPG_EMAIL" ]; then
-    
     export GPG_TTY=$(tty)
 
-    gpg --import /gpg-key/private.pgp $output
-    gpg --import /gpg-key/public.pgp $output
-    
+if [[ "$LOG_DEBUG" =~ ^(1|true|True|y|Y)$ ]]; then
+    gpg --import /gpg-key/private.pgp 
+    gpg --import /gpg-key/public.pgp
+else
+    gpg --import /gpg-key/private.pgp &> /dev/null
+    gpg --import /gpg-key/public.pgp &> /dev/null
+fi
+
     gpg --export -a "${GPG_EMAIL}" > /data/gpg
 
     set_rpmmacros.sh
