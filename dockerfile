@@ -1,4 +1,4 @@
-FROM almalinux:10.2
+FROM almalinux:10.2-minimal
 
 
 COPY src/* /usr/local/bin/
@@ -7,12 +7,11 @@ COPY entrypoint.sh /entrypoint.sh
 
 RUN chmod -R +x /usr/local/bin/*.sh /usr/local/bin/*.py /entrypoint.sh; \
     \
-    dnf install -y epel-release; \
-    /usr/bin/crb enable; \
+    microdnf install -y --setopt=install_weak_deps=0 --nodocs epel-release; \
     \
-    dnf -y update; \
+    microdnf -y update --setopt=install_weak_deps=0 --nodocs; \
     \
-    dnf -y install \
+    microdnf -y install --enablerepo=crb --setopt=install_weak_deps=0 --nodocs \
         desktop-file-utils \
         python3 \
         make \
@@ -24,10 +23,10 @@ RUN chmod -R +x /usr/local/bin/*.sh /usr/local/bin/*.py /entrypoint.sh; \
         nginx \
         createrepo_c \
         gpg \
-        python3-dnf \
         rpm-sign \
         mock; \
-    dnf clean all; \
+    microdnf clean all; \
+    rm -rf /var/cache/dnf; \
     \
     rm -f /etc/nginx/nginx.conf;
 
