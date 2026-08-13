@@ -21,7 +21,7 @@ RUN chmod -R +x /usr/local/bin/*.sh /usr/local/bin/*.py /entrypoint.sh; \
         binutils \
         gtk-update-icon-cache \
         util-linux \
-        httpd \
+        nginx \
         createrepo_c \
         gpg \
         python3-dnf \
@@ -29,10 +29,9 @@ RUN chmod -R +x /usr/local/bin/*.sh /usr/local/bin/*.py /entrypoint.sh; \
         mock; \
     dnf clean all; \
     \
-    rm -f /etc/httpd/conf.d/welcome.conf; \
-    sed -i "s/User apache/User spotify/" /etc/httpd/conf/httpd.conf; \
-    sed -i "s/Group apache/Group spotify/" /etc/httpd/conf/httpd.conf; \
-    sed -i 's|/var/www/html|/data|' /etc/httpd/conf/httpd.conf
+    rm -f /etc/nginx/nginx.conf;
+
+COPY nginx.conf /etc/nginx/nginx.conf
 
 
 VOLUME [ "/data" ]

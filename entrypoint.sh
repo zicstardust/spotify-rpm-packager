@@ -15,13 +15,14 @@ fi
 
 usermod -a -G mock spotify
 
-mkdir -p /data /home/spotify /gpg-key
+mkdir -p /data /home/spotify /gpg-key /logs
 
 mkdir -p /home/spotify/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
 
 if [[ "$DISABLE_WEB_SERVER" =~ ^(0|false|False|n|N)$ ]]; then
-    sed -i "s|Listen 80|Listen ${PORT:-80}|" /etc/httpd/conf/httpd.conf
-    httpd &> /dev/null
+    sed -i "s|listen 80 default_server|listen ${PORT:-80} default_server|" /etc/nginx/nginx.conf
+    sed -i "s|listen [::]:80 default_server|listen [::]:${PORT:-80} default_server|" /etc/nginx/nginx.conf
+    nginx &> /dev/null
 fi
 
 if [ "$GPG_NAME" ] && [ "$GPG_EMAIL" ]; then
@@ -31,6 +32,6 @@ if [ "$GPG_NAME" ] && [ "$GPG_EMAIL" ]; then
     rpm --import /gpg-key/public.pgp
 fi
 
-chown -R spotify:spotify /data /home/spotify /gpg-key
+chown -R spotify:spotify /data /home/spotify /gpg-key /logs
 
 exec runuser -u spotify -- "$@"
