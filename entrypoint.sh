@@ -14,6 +14,13 @@ if [ "$(id -u spotify)" != "${PUID}" ]; then
     usermod -o -u "${PUID}" spotify
 fi
 
+if [ "$REPO_USER" ] && [ "$REPO_PASSWORD" ]; then
+    sed -i "s|#auth_basic |auth_basic |g" /etc/nginx/conf.d/repo_server.conf
+    sed -i "s|#auth_basic_user_file |auth_basic_user_file |g" /etc/nginx/conf.d/repo_server.conf
+    htpasswd -bc /etc/nginx/.htpasswd "${REPO_USER}" "${REPO_PASSWORD}" >& /dev/null
+    chmod 600 /etc/nginx/.htpasswd
+    chown spotify:spotify /etc/nginx/.htpasswd
+fi
 
 if [ "$PORT" ]; then
     sed -i "s|80 default_server|${PORT} default_server|g" /etc/nginx/conf.d/{repo_server.conf,block_default_server.conf}

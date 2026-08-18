@@ -24,6 +24,7 @@ RUN chmod -R +x /usr/local/bin/*.sh /usr/local/bin/*.py /entrypoint.sh; \
         createrepo_c \
         gpg \
         rpm-sign \
+        httpd-tools \
         mock; \
     microdnf clean all; \
     rm -rf /var/cache/dnf; \
