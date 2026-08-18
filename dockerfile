@@ -28,7 +28,11 @@ RUN chmod -R +x /usr/local/bin/*.sh /usr/local/bin/*.py /entrypoint.sh; \
     microdnf clean all; \
     rm -rf /var/cache/dnf; \
     \
-    rm -f /etc/nginx/nginx.conf;
+    rm -f /etc/nginx/nginx.conf; \
+    \
+    groupadd -g 1000 spotify; \
+    useradd -m -u 1000 -g 1000 -s /sbin/nologin spotify; \
+    usermod -a -G mock spotify;
 
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
 COPY nginx/block_default_server.conf /etc/nginx/conf.d/block_default_server.conf
