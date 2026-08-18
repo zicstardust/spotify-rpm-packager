@@ -5,6 +5,7 @@ on:
     branches: [ "main" ]
     paths:
       - src/**
+      - nginx/**
       - dockerfile
       - entrypoint.sh
       - .github/workflows/push-to-dockerhub.yml

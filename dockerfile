@@ -30,7 +30,9 @@ RUN chmod -R +x /usr/local/bin/*.sh /usr/local/bin/*.py /entrypoint.sh; \
     \
     rm -f /etc/nginx/nginx.conf;
 
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY nginx/nginx.conf /etc/nginx/nginx.conf
+COPY nginx/block_default_server.conf /etc/nginx/conf.d/block_default_server.conf
+COPY nginx/repo_server.conf /etc/nginx/conf.d/repo_server.conf
 
 
 VOLUME [ "/data" ]

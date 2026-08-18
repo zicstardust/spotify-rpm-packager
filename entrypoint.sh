@@ -19,9 +19,20 @@ mkdir -p /data /home/spotify /gpg-key /logs
 
 mkdir -p /home/spotify/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
 
+if [ "$PORT" ]; then
+    sed -i "s|80 default_server|${PORT} default_server|g" /etc/nginx/conf.d/{repo_server.conf,block_default_server.conf}
+fi
+
+
+if [ "$SERVER_NAME" ]; then
+    sed -i "s|#include /etc/nginx/conf.d/block_default_server.conf;|include /etc/nginx/conf.d/block_default_server.conf;|" /etc/nginx/nginx.conf
+    sed -i "s| default_server||g" /etc/nginx/conf.d/repo_server.conf
+    sed -i "s|server_name _;|server_name ${SERVER_NAME};|g" /etc/nginx/conf.d/repo_server.conf
+fi
+
+
+
 if [[ "$DISABLE_WEB_SERVER" =~ ^(0|false|False|n|N)$ ]]; then
-    sed -i "s|listen 80 default_server|listen ${PORT:-80} default_server|" /etc/nginx/nginx.conf
-    sed -i "s|listen [::]:80 default_server|listen [::]:${PORT:-80} default_server|" /etc/nginx/nginx.conf
     nginx &> /dev/null
 fi
 
