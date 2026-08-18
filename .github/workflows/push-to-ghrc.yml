@@ -8,7 +8,6 @@ on:
       - nginx/**
       - dockerfile
       - entrypoint.sh
-      - .github/workflows/push-to-ghrc.yml
 
 env:
   BUILDX_NO_DEFAULT_ATTESTATIONS: 1
