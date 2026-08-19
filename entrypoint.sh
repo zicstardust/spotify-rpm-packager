@@ -28,8 +28,8 @@ if [ "$REPO_USER" ] && [ "$REPO_PASSWORD" ]; then
     chown spotify:spotify /etc/nginx/.htpasswd
 fi
 
-if [ "$PORT" ]; then
-    sed -i "s|80 default_server|${PORT} default_server|g" /etc/nginx/conf.d/{repo_server.conf,block_default_server.conf}
+if [ "$REPO_PORT" ]; then
+    sed -i "s|80 default_server|${REPO_PORT} default_server|g" /etc/nginx/conf.d/{repo_server.conf,block_default_server.conf}
 fi
 
 
