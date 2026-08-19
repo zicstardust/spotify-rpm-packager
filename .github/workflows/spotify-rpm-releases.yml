@@ -1,0 +1,276 @@
+name: Build and publish Spotify RPM releases
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+    inputs:
+      force_release:
+        description: "Create a release even when the version already exists."
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  detect:
+    runs-on: ubuntu-latest
+    outputs:
+      stable_version: ${{ steps.versions.outputs.stable_version }}
+      testing_version: ${{ steps.versions.outputs.testing_version }}
+      stable_release_needed: ${{ steps.versions.outputs.stable_release_needed }}
+      testing_release_needed: ${{ steps.versions.outputs.testing_release_needed }}
+      testing_promove_to_stable: ${{ steps.versions.outputs.testing_promove_to_stable }}
+      ready: ${{ steps.versions.outputs.ready }}
+    steps:
+      - name: Detect Spotify versions
+        id: versions
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          stable_version="$(curl -fsSL https://repository.spotify.com/dists/stable/non-free/binary-amd64/Packages.gz | gzip -dc | awk '/^Package: spotify-client/{found=1; next} found && /^Version:/{print $2; exit}' | sed 's/^[0-9]*://')"
+          testing_version="$(curl -fsSL https://repository.spotify.com/dists/testing/non-free/binary-amd64/Packages.gz | gzip -dc | awk '/^Package: spotify-client/{found=1; next} found && /^Version:/{print $2; exit}' | sed 's/^[0-9]*://')"
+
+          if [ -z "${stable_version}" ] || [ -z "${testing_version}" ]; then
+            echo "Unable to detect Spotify versions from the repository metadata."
+            exit 1
+          fi
+
+          stable_tag="${stable_version}"
+          testing_tag="${testing_version}"
+
+          
+          stable_release_needed=false
+          testing_promove_to_stable=false
+          testing_release_needed=false
+
+          STABLE_IS_PRERELEASE=$(gh release view "${stable_tag}" --repo "${GITHUB_REPOSITORY}" --json isPrerelease --jq '.isPrerelease' 2>&1 || true)
+
+          if ! gh release view "${stable_tag}" --repo "${GITHUB_REPOSITORY}" >/dev/null 2>&1; then
+            stable_release_needed=true
+          elif [ "$STABLE_IS_PRERELEASE" = "true" ]; then
+            testing_promove_to_stable=true
+          fi
+
+          if ! gh release view "${testing_tag}" --repo "${GITHUB_REPOSITORY}" >/dev/null 2>&1; then
+            testing_release_needed=true
+          fi
+
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ inputs.force_release }}" == "true" ]]; then
+            stable_release_needed=true
+            testing_release_needed=true
+          fi
+
+          if [[ "${stable_release_needed}" == "true" || "${testing_release_needed}" == "true" ]]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          fi
+
+          echo "stable_version=${stable_version}" >> "$GITHUB_OUTPUT"
+          echo "testing_version=${testing_version}" >> "$GITHUB_OUTPUT"
+          echo "stable_release_needed=${stable_release_needed}" >> "$GITHUB_OUTPUT"
+          echo "testing_release_needed=${testing_release_needed}" >> "$GITHUB_OUTPUT"
+          echo "testing_promove_to_stable=${testing_promove_to_stable}" >> "$GITHUB_OUTPUT"
+
+          echo "Detected stable ${stable_version} and testing ${testing_version}"
+  promove_to_stable:
+    needs: detect
+    if: ${{ needs.detect.outputs.testing_promove_to_stable == 'true' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Promote testing release to stable
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="${{ needs.detect.outputs.stable_version }}"
+          body=$(cat <<"EOF"
+          ## Spotify info:
+          - Spotify branch: `Stable`
+          - Architecture: `x86_64`
+
+          ## RPM build:
+          - Unsigned
+          - ffmpeg builit-in
+          - Enterprise Linux 10 (EL10) and Fedora 44 (FC44)
+
+          ## RPMs:
+          - `*.src.rpm` - Source RPM
+          - `*.x86_64.rpm` - Binary RPM
+
+          This is a build automated by GitHub Actions.
+          EOF
+          )
+
+          echo "Promoting testing release to stable release"
+
+          gh release edit "$tag" \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "${tag}" \
+            --notes "$body" \
+            --prerelease=false \
+            --latest
+  publish:
+    needs: detect
+    if: ${{ needs.detect.outputs.ready == 'true' }}
+    runs-on: ubuntu-latest
+    env:
+      BUILD_TARGETS: el10,fc44
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Build RPM packager image
+        run: docker build -t spotify-rpm-packager:${GITHUB_RUN_ID} .
+
+      - name: Build stable RPMs
+        if: ${{ needs.detect.outputs.stable_release_needed == 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p ./build-stable ./assets-stable
+          docker run --rm --privileged \
+            -e BUILD="${BUILD_TARGETS}" \
+            -e BUILTIN_FFMPEG=true \
+            -e DISABLE_WEB_SERVER=true \
+            -e STABLE_BUILDS=true \
+            -e SRPMS_BUILDS=true \
+            -e LOG_DEBUG=true \
+            -e INTERVAL=false \
+            -v "$PWD/build-stable:/data" \
+            spotify-rpm-packager:${GITHUB_RUN_ID}
+          find ./build-stable -type f -name '*.rpm' -exec cp {} ./assets-stable/ \;
+          ls -1 ./assets-stable
+
+      - name: Publish stable Github release
+        if: ${{ needs.detect.outputs.stable_release_needed == 'true' }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="${{ needs.detect.outputs.stable_version }}"
+          body=$(cat <<"EOF"
+          ## Spotify info:
+          - Spotify branch: `Stable`
+          - Architecture: `x86_64`
+
+          ## RPM build:
+          - Unsigned
+          - ffmpeg builit-in
+          - Enterprise Linux 10 (EL10) and Fedora 44 (FC44)
+
+          ## RPMs:
+          - `*.src.rpm` - Source RPM
+          - `*.x86_64.rpm` - Binary RPM
+
+          This is a build automated by GitHub Actions.
+          EOF
+          )
+
+          gh api \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            /repos/${GITHUB_REPOSITORY}/releases \
+            -f tag_name="${tag}" \
+            -f target_commitish="${GITHUB_SHA}" \
+            -f name="${tag}" \
+            -f body="${body}" \
+            -F draft=false \
+            -F prerelease=false \
+            -f make_latest="true"
+
+          gh release upload "${tag}" --repo "${GITHUB_REPOSITORY}" ./assets-stable/*.rpm --clobber
+
+      - name: Build testing RPMs
+        if: ${{ needs.detect.outputs.testing_release_needed == 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p ./build-testing ./assets-testing
+          docker run --rm --privileged \
+            -e BUILD="${BUILD_TARGETS}" \
+            -e BUILTIN_FFMPEG=true \
+            -e SRPMS_BUILDS=true \
+            -e STABLE_BUILDS=false \
+            -e TESTING_BUILDS=true \
+            -e DISABLE_WEB_SERVER=true \
+            -e LOG_DEBUG=true \
+            -e INTERVAL=false \
+            -v "$PWD/build-testing:/data" \
+            spotify-rpm-packager:${GITHUB_RUN_ID}
+          find ./build-testing -type f -name '*.rpm' -exec cp {} ./assets-testing/ \;
+          ls -1 ./assets-testing
+
+      - name: Publish testing Github release
+        if: ${{ needs.detect.outputs.testing_release_needed == 'true' }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="${{ needs.detect.outputs.testing_version }}"
+          body=$(cat <<"EOF"
+          ## Spotify info:
+          - Spotify branch: `Testing`
+          - Architecture: `x86_64`
+
+          ## RPM build:
+          - Unsigned
+          - ffmpeg builit-in
+          - Enterprise Linux 10 (EL10) and Fedora 44 (FC44)
+
+          ## RPMs:
+          - `*.src.rpm` - Source RPM
+          - `*.x86_64.rpm` - Binary RPM
+
+          This is a build automated by GitHub Actions.
+          EOF
+          )
+
+          gh api \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            /repos/${GITHUB_REPOSITORY}/releases \
+            -f tag_name="${tag}" \
+            -f target_commitish="${GITHUB_SHA}" \
+            -f name="${tag}" \
+            -f body="${body}" \
+            -F draft=false \
+            -F prerelease=true \
+            -f make_latest="false"
+
+          gh release upload "${tag}" --repo "${GITHUB_REPOSITORY}" ./assets-testing/*.rpm --clobber
+
+  delete_old_releases:
+    needs: detect
+    if: ${{ needs.detect.outputs.testing_release_needed == 'true' || needs.detect.outputs.stable_release_needed == 'true' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Delete Old Releases
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          stable_tag="${{ needs.detect.outputs.stable_version }}"
+          testing_tag="${{ needs.detect.outputs.testing_version }}"
+         
+          RELEASES=($(gh release list --repo "${GITHUB_REPOSITORY}" --json tagName --jq '.[] | "\(.tagName)"'))
+
+          for tag in "${RELEASES[@]}"; do
+            if [ $tag != "$stable_tag" ] && [ $tag != "$testing_tag" ]; then
+              echo "Deleting old release: $tag"
+              gh release delete "$tag" --repo "${GITHUB_REPOSITORY}" --cleanup-tag --yes
+            fi
+          done

@@ -79,6 +79,11 @@ do
     fi
 
     #Start interval
-    echo "Start INTERVAL: ${INTERVAL}"
-    sleep ${INTERVAL}
+    if [[ "$INTERVAL" =~ ^(false|False|n|N)$ ]]; then
+        echo "Interval disable, exit"
+        exit 0
+    else
+        echo "Start INTERVAL: ${INTERVAL}"
+        sleep ${INTERVAL}
+    fi
 done
