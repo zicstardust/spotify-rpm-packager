@@ -20,10 +20,10 @@ mkdir -p /home/spotify/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
 chown -R spotify:spotify /data /home/spotify /gpg-key /logs
 
 
-if [ "$REPO_USER" ] && [ "$REPO_PASSWORD" ]; then
+if [ "$REPO_AUTHENTICATION_USER" ] && [ "$REPO_AUTHENTICATION_PASSWORD" ]; then
     sed -i "s|#auth_basic |auth_basic |g" /etc/nginx/conf.d/repo_server.conf
     sed -i "s|#auth_basic_user_file |auth_basic_user_file |g" /etc/nginx/conf.d/repo_server.conf
-    htpasswd -bc /etc/nginx/.htpasswd "${REPO_USER}" "${REPO_PASSWORD}" >& /dev/null
+    htpasswd -bc /etc/nginx/.htpasswd "${REPO_AUTHENTICATION_USER}" "${REPO_AUTHENTICATION_PASSWORD}" >& /dev/null
     chmod 600 /etc/nginx/.htpasswd
     chown spotify:spotify /etc/nginx/.htpasswd
 fi

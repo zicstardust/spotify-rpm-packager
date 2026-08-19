@@ -37,10 +37,10 @@ fi
 
 
 
-if [ "$REPO_USER" ] && [ "$REPO_PASSWORD" ]; then
+if [ "$REPO_AUTHENTICATION_USER" ] && [ "$REPO_AUTHENTICATION_PASSWORD" ]; then
     autentication=$(cat <<EOF
-username=$REPO_USER
-password=$REPO_PASSWORD
+username=$REPO_AUTHENTICATION_USER
+password=$REPO_AUTHENTICATION_PASSWORD
 EOF
 )
 else
@@ -52,8 +52,8 @@ EOF
 fi
 
 
-if [ "$REPO_USER" ] && [ "$REPO_PASSWORD" ] && [[ "$REPO_AUTHENTICATION_GPG_FILE" =~ ^(1|true|True|y|Y)$ ]]; then
-    gpg_url=$(echo "$REPO_FILE_URL" | sed -E "s|(https?://)|\1${REPO_USER}:${REPO_PASSWORD}@|g")
+if [ "$REPO_AUTHENTICATION_USER" ] && [ "$REPO_AUTHENTICATION_PASSWORD" ] && [[ "$REPO_AUTHENTICATION_GPG_FILE" =~ ^(1|true|True|y|Y)$ ]]; then
+    gpg_url=$(echo "$REPO_FILE_URL" | sed -E "s|(https?://)|\1${REPO_AUTHENTICATION_USER}:${REPO_AUTHENTICATION_PASSWORD}@|g")
 else
     gpg_url="${REPO_FILE_URL}/gpg"
 fi
