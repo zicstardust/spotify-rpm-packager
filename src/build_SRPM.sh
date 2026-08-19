@@ -5,9 +5,9 @@ SPOTIFY_VERSION=$2
 
 #https://github.com/zicstardust/spotify-debfixes/releases
 if [ "$SPOTIFY_BRANCH" == "stable" ]; then
-    ffmpeg_spotify_release="1.0"
+    ffmpeg_spotify_release="7.1.5"
 elif [ "$SPOTIFY_BRANCH" == "testing" ]; then
-    ffmpeg_spotify_release="1.0"
+    ffmpeg_spotify_release="7.1.5"
 fi
 
 current_dir=$(pwd)
@@ -28,9 +28,9 @@ rm -Rf spotify-client-${SPOTIFY_VERSION}/usr/share/spotify/apt-keys
 if [[ "$BUILTIN_FFMPEG" =~ ^(1|true|True|y|Y)$ ]]; then
     echo "Including FFMPEG libraries..."
     if [[ "$LOG_DEBUG" =~ ^(1|true|True|y|Y)$ ]]; then
-        curl -fSL "https://github.com/zicstardust/spotify-debfixes/releases/download/${ffmpeg_spotify_release}/spotify_ffmpeg_libs_linux_x86_64.tar.gz" -o "/tmp/ffmpeg_libs.tar.gz"
+        curl -fSL "https://github.com/zicstardust/spotify-ffmpeg-libs/releases/download/v${ffmpeg_spotify_release}/spotify-ffmpeg-${ffmpeg_spotify_release}-libs-linux-x86_64.tar.gz" -o "/tmp/ffmpeg_libs.tar.gz"
     else
-        curl -fSL "https://github.com/zicstardust/spotify-debfixes/releases/download/${ffmpeg_spotify_release}/spotify_ffmpeg_libs_linux_x86_64.tar.gz" -o "/tmp/ffmpeg_libs.tar.gz" &> /dev/null
+        curl -fSL "https://github.com/zicstardust/spotify-ffmpeg-libs/releases/download/v${ffmpeg_spotify_release}/spotify-ffmpeg-${ffmpeg_spotify_release}-libs-linux-x86_64.tar.gz" -o "/tmp/ffmpeg_libs.tar.gz" &> /dev/null
     fi
     mkdir -p spotify-client-${SPOTIFY_VERSION}/usr/share/spotify/ffmpeg
     if [[ "$LOG_DEBUG" =~ ^(1|true|True|y|Y)$ ]]; then
