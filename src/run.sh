@@ -38,6 +38,11 @@ fi
     set_rpmmacros.sh
 fi
 
+if [ "$REPO_FILE_URL" ]; then
+    echo "Generating repo file..."
+    generate_repofile.sh
+fi
+
 
 build_RPM(){
 

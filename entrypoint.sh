@@ -33,10 +33,10 @@ if [ "$PORT" ]; then
 fi
 
 
-if [ "$SERVER_NAME" ]; then
+if [ "$REPO_SERVER_NAME" ]; then
     sed -i "s|#include /etc/nginx/conf.d/block_default_server.conf;|include /etc/nginx/conf.d/block_default_server.conf;|" /etc/nginx/nginx.conf
     sed -i "s| default_server||g" /etc/nginx/conf.d/repo_server.conf
-    sed -i "s|server_name _;|server_name ${SERVER_NAME};|g" /etc/nginx/conf.d/repo_server.conf
+    sed -i "s|server_name _;|server_name ${REPO_SERVER_NAME};|g" /etc/nginx/conf.d/repo_server.conf
 fi
 
 
