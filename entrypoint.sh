@@ -14,6 +14,12 @@ if [ "$(id -u spotify)" != "${PUID}" ]; then
     usermod -o -u "${PUID}" spotify
 fi
 
+
+mkdir -p /data /gpg-key /logs
+mkdir -p /home/spotify/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
+chown -R spotify:spotify /data /home/spotify /gpg-key /logs
+
+
 if [ "$REPO_USER" ] && [ "$REPO_PASSWORD" ]; then
     sed -i "s|#auth_basic |auth_basic |g" /etc/nginx/conf.d/repo_server.conf
     sed -i "s|#auth_basic_user_file |auth_basic_user_file |g" /etc/nginx/conf.d/repo_server.conf
@@ -46,9 +52,5 @@ if [ "$GPG_NAME" ] && [ "$GPG_EMAIL" ]; then
     rpm --import /gpg-key/public.pgp
 fi
 
-
-mkdir -p /data /gpg-key /logs
-mkdir -p /home/spotify/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
-chown -R spotify:spotify /data /home/spotify /gpg-key /logs
 
 exec runuser -u spotify -- "$@"
