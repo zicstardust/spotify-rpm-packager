@@ -39,9 +39,13 @@ if [ "$REPO_SERVER_NAME" ]; then
     sed -i "s|server_name _;|server_name ${REPO_SERVER_NAME};|g" /etc/nginx/conf.d/repo_server.conf
 fi
 
-
 if [[ "$DISABLE_WEB_SERVER" =~ ^(0|false|False|n|N)$ ]]; then
     nginx &> /dev/null
+fi
+
+
+if [[ "$REPO_AUTHENTICATION_GPG_FILE" =~ ^(1|true|True|y|Y)$ ]]; then
+    sed -i "s|location = /gpg|#location = /gpg|" /etc/nginx/conf.d/repo_server.conf
 fi
 
 
