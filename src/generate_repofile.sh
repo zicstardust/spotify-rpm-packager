@@ -2,10 +2,10 @@
 
 set -e
 
-: "${REPO_FILE_ENABLE_STABLE:=1}"
-: "${REPO_FILE_ENABLE_TESTING:=0}"
-: "${REPO_FILE_ENABLE_SOURCE_STABLE:=0}"
-: "${REPO_FILE_ENABLE_SOURCE_TESTING:=0}"
+: "${REPO_FILE_ENABLE_STABLE:=true}"
+: "${REPO_FILE_ENABLE_TESTING:=false}"
+: "${REPO_FILE_ENABLE_SOURCE_STABLE:=false}"
+: "${REPO_FILE_ENABLE_SOURCE_TESTING:=false}"
 
 
 file_output="/data/spotify-unofficial.repo"

@@ -4,6 +4,7 @@ set -e
 : "${PUID:=1000}"
 : "${PGID:=1000}"
 : "${DISABLE_WEB_SERVER:=false}"
+: "${REPO_AUTHENTICATION_GPG_FILE:=false}"
 
 if [ "$(id -g spotify)" != "${PGID}" ]; then
     groupmod -o -g "${PGID}" spotify
