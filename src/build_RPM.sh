@@ -60,6 +60,6 @@ if [[ "$SRPMS_BUILDS" =~ ^(1|true|True|y|Y)$ ]]; then
         createrepo /data/${release}/source/${SPOTIFY_BRANCH}/ &> /dev/null
     fi
 fi
-
+mock -r ${mock_file} --clean &> /dev/null
 echo "Finish: spotify-client, branch=${SPOTIFY_BRANCH}, version=${SPOTIFY_VERSION} to ${mock_file}!"
 
