@@ -3,12 +3,9 @@
 SPOTIFY_BRANCH=$1
 SPOTIFY_VERSION=$2
 
+logfile="$(getdate "log").download.deb.${SPOTIFY_VERSION}"
+
 deb_file="/tmp/spotify-client_${SPOTIFY_VERSION}_amd64.deb"
 
-echo "Downloading .deb, latest ${SPOTIFY_BRANCH} version: $SPOTIFY_VERSION"
-
-if [ "$LOG_LEVEL" = "all" ]; then
-    curl -fSL "https://repository.spotify.com/pool/non-free/s/spotify-client/spotify-client_${SPOTIFY_VERSION}_amd64.deb" -o "$deb_file"
-else
-    curl -fSL "https://repository.spotify.com/pool/non-free/s/spotify-client/spotify-client_${SPOTIFY_VERSION}_amd64.deb" -o "$deb_file" &> /dev/null
-fi
+echo "$(getdate) - Downloading .deb, latest ${SPOTIFY_BRANCH} version: $SPOTIFY_VERSION" 2>&1 | logs $logfile "all"
+curl -fSL "https://repository.spotify.com/pool/non-free/s/spotify-client/spotify-client_${SPOTIFY_VERSION}_amd64.deb" -o "$deb_file" 2>&1 | logs $logfile

@@ -1,11 +1,9 @@
 #!/usr/bin/env bash
 
-echo "cleanup..."
+logfile="$(getdate "log").cleanup.${SPOTIFY_VERSION}"
 
-rm -Rf /tmp/*
+echo "$(getdate) - cleanup..." 2>&1 | logs $logfile "all"
 
-rm -Rf /home/spotify/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}/*
-#rm -Rf /home/spotify/rpmbuild/SRPMS/*
-#rm -Rf /home/spotify/rpmbuild/{BUILD,RPMS,SOURCES,SPECS}/*
+rm -Rfv /tmp/* 2>&1 | logs $logfile
 
-#rm -Rf /var/lib/mock/*
+rm -Rfv /home/spotify/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}/* 2>&1 | logs $logfile

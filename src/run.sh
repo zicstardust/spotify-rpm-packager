@@ -10,6 +10,8 @@ set -e
 : "${LOG_LEVEL:=info}"
 : "${ENTERPRISE_LINUX_BACKEND:=alma}"
 
+
+
 export STABLE_BUILDS
 export TESTING_BUILDS
 export SRPMS_BUILDS
@@ -21,17 +23,43 @@ export ENTERPRISE_LINUX_BACKEND
 export BUILD_DIR="/home/spotify/rpmbuild"
 export SOURCES_DIR="${BUILD_DIR}/SOURCES"
 
+getdate(){
+    local dateformat=$1
+
+    if [ "$dateformat" = "log" ]; then
+        echo "$(date +%Y-%m-%d)"
+    else
+        echo "[$(date "+%m-%d-%Y %H:%M:%S")]"
+    fi
+}
+
+logs() {
+    local log_file=$1
+    local loglevel="${2:-$LOG_LEVEL}"
+
+    if [ "$loglevel" = "all" ]; then
+        if [ "$LOG_LEVEL" = "info" ]; then
+            tee -a /dev/null
+        else
+            stdbuf -oL tee -a "/logs/${log_file}.log"
+        fi
+    elif [ "$loglevel" = "file" ]; then
+        cat >> "/logs/${log_file}.log"
+    else
+        cat >> /dev/null
+    fi
+}
+
+export -f getdate
+export -f logs
+
+
 #GPG Key
 if [ "$GPG_NAME" ] && [ "$GPG_EMAIL" ]; then
     export GPG_TTY=$(tty)
 
-    if [ "$LOG_LEVEL" = "all" ]; then
-        gpg --import /gpg-key/private.pgp 
-        gpg --import /gpg-key/public.pgp
-    else
-        gpg --import /gpg-key/private.pgp &> /dev/null
-        gpg --import /gpg-key/public.pgp &> /dev/null
-    fi
+    gpg --import /gpg-key/private.pgp 2>&1 | logs "$(getdate "log").rpm.gpg.import.log" 
+    gpg --import /gpg-key/public.pgp 2>&1 | logs "$(getdate "log").rpm.gpg.import.log" 
 
     gpg --export -a "${GPG_EMAIL}" > /data/gpg
 
@@ -39,7 +67,7 @@ if [ "$GPG_NAME" ] && [ "$GPG_EMAIL" ]; then
 fi
 
 if [ "$REPO_FILE_URL" ]; then
-    echo "Generating repo file..."
+    echo "$(getdate) - Generating repo file..." | logs "$(getdate "log").generate.repofile.log" "all"
     generate_repofile.sh
 fi
 
@@ -80,11 +108,11 @@ build_RPM(){
     check_builds=$(check_if_all_builds_exist $distros $SPOTIFY_BRANCH $SPOTIFY_VERSION) 
 
     if [ "$check_builds" = "true" ]; then
-        echo "Not Found new .deb ${SPOTIFY_BRANCH} version, skip"
+        echo "$(getdate) - Not Found new .deb ${SPOTIFY_BRANCH} version, skip"
         return
     fi
     
-    echo "New .deb ${SPOTIFY_BRANCH} version found!"
+    echo "$(getdate) - New .deb ${SPOTIFY_BRANCH} version found!"
     download_deb.sh $SPOTIFY_BRANCH $SPOTIFY_VERSION
     build_SRPM.sh $SPOTIFY_BRANCH $SPOTIFY_VERSION    
 
@@ -102,21 +130,21 @@ do
     if [[ "$STABLE_BUILDS" =~ ^(1|true|True|y|Y)$ ]]; then
         build_RPM stable
     else
-        echo "Skip build stable RPM"
+        echo "$(getdate) - Skip build stable RPM"
     fi
 
     if [[ "$TESTING_BUILDS" =~ ^(1|true|True|y|Y)$ ]]; then
         build_RPM testing
     else
-        echo "Skip build testing RPM"
+        echo "$(getdate) - Skip build testing RPM"
     fi
 
     #Start interval
     if [[ "$INTERVAL" =~ ^(false|False|n|N)$ ]]; then
-        echo "Interval disable, exit"
+        echo "$(getdate) - Interval disable, exit"
         exit 0
     else
-        echo "Start INTERVAL: ${INTERVAL}"
+        echo "$(getdate) - Start INTERVAL: ${INTERVAL}"
         sleep ${INTERVAL}
     fi
 done
