@@ -27,13 +27,13 @@ rm -Rf spotify-client-${SPOTIFY_VERSION}/usr/share/spotify/apt-keys
 #Include FFMPEG libraries
 if [[ "$BUILTIN_FFMPEG" =~ ^(1|true|True|y|Y)$ ]]; then
     echo "Including FFMPEG libraries..."
-    if [[ "$LOG_DEBUG" =~ ^(1|true|True|y|Y)$ ]]; then
+    if [ "$LOG_LEVEL" = "all" ]; then
         curl -fSL "https://github.com/zicstardust/spotify-ffmpeg-libs/releases/download/v${ffmpeg_spotify_release}/spotify-ffmpeg-${ffmpeg_spotify_release}-libs-linux-x86_64.tar.gz" -o "/tmp/ffmpeg_libs.tar.gz"
     else
         curl -fSL "https://github.com/zicstardust/spotify-ffmpeg-libs/releases/download/v${ffmpeg_spotify_release}/spotify-ffmpeg-${ffmpeg_spotify_release}-libs-linux-x86_64.tar.gz" -o "/tmp/ffmpeg_libs.tar.gz" &> /dev/null
     fi
     mkdir -p spotify-client-${SPOTIFY_VERSION}/usr/share/spotify/ffmpeg
-    if [[ "$LOG_DEBUG" =~ ^(1|true|True|y|Y)$ ]]; then
+    if [ "$LOG_LEVEL" = "all" ]; then
         tar -xzf /tmp/ffmpeg_libs.tar.gz  -C spotify-client-${SPOTIFY_VERSION}/usr/share/spotify/ffmpeg
     else
         tar -xzf /tmp/ffmpeg_libs.tar.gz  -C spotify-client-${SPOTIFY_VERSION}/usr/share/spotify/ffmpeg &> /dev/null
@@ -75,7 +75,7 @@ generate_spec.sh ${BUILD_DIR}/SPECS/spotify.spec $SPOTIFY_VERSION
 
 
 echo "Building SRPMS spotify-client:${SPOTIFY_VERSION}..."
-if [[ "$LOG_DEBUG" =~ ^(1|true|True|y|Y)$ ]]; then
+if [ "$LOG_LEVEL" = "all" ]; then
     rpmbuild -bs --define "_topdir ${BUILD_DIR}" ${BUILD_DIR}/SPECS/spotify.spec
 else
     rpmbuild -bs --define "_topdir ${BUILD_DIR}" ${BUILD_DIR}/SPECS/spotify.spec &> /dev/null

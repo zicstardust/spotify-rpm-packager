@@ -7,7 +7,7 @@ set -e
 : "${SRPMS_BUILDS:=false}"
 : "${BUILTIN_FFMPEG:=true}"
 : "${BUILD:=el10}"
-: "${LOG_DEBUG:=false}"
+: "${LOG_LEVEL:=info}"
 : "${ENTERPRISE_LINUX_BACKEND:=alma}"
 
 export STABLE_BUILDS
@@ -15,7 +15,7 @@ export TESTING_BUILDS
 export SRPMS_BUILDS
 export BUILTIN_FFMPEG
 export BUILD
-export LOG_DEBUG
+export LOG_LEVEL
 export ENTERPRISE_LINUX_BACKEND
 
 export BUILD_DIR="/home/spotify/rpmbuild"
@@ -25,13 +25,13 @@ export SOURCES_DIR="${BUILD_DIR}/SOURCES"
 if [ "$GPG_NAME" ] && [ "$GPG_EMAIL" ]; then
     export GPG_TTY=$(tty)
 
-if [[ "$LOG_DEBUG" =~ ^(1|true|True|y|Y)$ ]]; then
-    gpg --import /gpg-key/private.pgp 
-    gpg --import /gpg-key/public.pgp
-else
-    gpg --import /gpg-key/private.pgp &> /dev/null
-    gpg --import /gpg-key/public.pgp &> /dev/null
-fi
+    if [ "$LOG_LEVEL" = "all" ]; then
+        gpg --import /gpg-key/private.pgp 
+        gpg --import /gpg-key/public.pgp
+    else
+        gpg --import /gpg-key/private.pgp &> /dev/null
+        gpg --import /gpg-key/public.pgp &> /dev/null
+    fi
 
     gpg --export -a "${GPG_EMAIL}" > /data/gpg
 

@@ -7,7 +7,7 @@ deb_file="/tmp/spotify-client_${SPOTIFY_VERSION}_amd64.deb"
 
 echo "Downloading .deb, latest ${SPOTIFY_BRANCH} version: $SPOTIFY_VERSION"
 
-if [[ "$LOG_DEBUG" =~ ^(1|true|True|y|Y)$ ]]; then
+if [ "$LOG_LEVEL" = "all" ]; then
     curl -fSL "https://repository.spotify.com/pool/non-free/s/spotify-client/spotify-client_${SPOTIFY_VERSION}_amd64.deb" -o "$deb_file"
 else
     curl -fSL "https://repository.spotify.com/pool/non-free/s/spotify-client/spotify-client_${SPOTIFY_VERSION}_amd64.deb" -o "$deb_file" &> /dev/null
