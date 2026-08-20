@@ -24,15 +24,23 @@ fi
 
 if [ -e "$(ls /data/${release}/x86_64/${SPOTIFY_BRANCH}/Packages/spotify-client-${SPOTIFY_VERSION}*.x86_64.rpm 2> /dev/null)" ]; then
     echo "spotify-client:${SPOTIFY_VERSION} RPM to ${mock_file} exists, skip"
-    exit 0
-else
-    echo "Building spotify-client:${SPOTIFY_VERSION} to ${mock_file}..."
-    if [[ "$LOG_DEBUG" =~ ^(1|true|True|y|Y)$ ]]; then
-        mock -r ${mock_file} --rebuild $srpms_file
-    else
-        mock -r ${mock_file} --rebuild $srpms_file &> /dev/null
+    if [[ "$SRPMS_BUILDS" =~ ^(1|true|True|y|Y)$ ]]; then
+        if [ -e "$(ls /data/${release}source/${SPOTIFY_BRANCH}/Packages/spotify-client-${SPOTIFY_VERSION}*.src.rpm 2> /dev/null)" ]; then
+            echo "spotify-client:${SPOTIFY_VERSION} SRPM to ${mock_file} exists, skip"
+            exit 0
+        fi
+    else 
+        exit 0
     fi
 fi
+
+echo "Building spotify-client:${SPOTIFY_VERSION} to ${mock_file}..."
+if [[ "$LOG_DEBUG" =~ ^(1|true|True|y|Y)$ ]]; then
+    mock -r ${mock_file} --rebuild $srpms_file
+else
+    mock -r ${mock_file} --rebuild $srpms_file &> /dev/null
+    fi
+
 
 if [ "$GPG_NAME" ] && [ "$GPG_EMAIL" ]; then
     echo "Signing RPMs spotify-client:${SPOTIFY_VERSION} to ${mock_file}..."

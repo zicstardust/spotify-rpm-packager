@@ -43,22 +43,50 @@ if [ "$REPO_FILE_URL" ]; then
     generate_repofile.sh
 fi
 
+check_if_all_builds_exist(){
+    distros=$1
+    SPOTIFY_BRANCH=$2
+    SPOTIFY_VERSION=$3
+    
+    for item in "${distros[@]}"; do
+
+        release="${item:2}"
+
+        if ! [ "$(ls /data/${release}/x86_64/${SPOTIFY_BRANCH}/Packages/spotify-client-${SPOTIFY_VERSION}*.x86_64.rpm 2> /dev/null)" ]; then
+            echo "false"
+            return
+        fi
+
+        if [[ "$SRPMS_BUILDS" =~ ^(1|true|True|y|Y)$ ]]; then
+            if ! [ "$(ls /data/${release}/source/${SPOTIFY_BRANCH}/Packages/spotify-client-${SPOTIFY_VERSION}*.src.rpm 2> /dev/null)" ]; then
+                echo "false"
+                return
+            fi
+        fi
+    done
+    echo "true"
+    return
+}
+
 
 build_RPM(){
 
     SPOTIFY_BRANCH=$1
+
     parser_debian_control_file.py $SPOTIFY_BRANCH spotify-client Version
     SPOTIFY_VERSION=$(cat /tmp/spotify-client.${SPOTIFY_BRANCH}.Version)
+    IFS="," read -ra distros <<< "$BUILD"
 
-    if [ "$(ls ${BUILD_DIR}/SRPMS/spotify-client-${SPOTIFY_VERSION}*.src.rpm 2> /dev/null)" ]; then
+    check_builds=$(check_if_all_builds_exist $distros $SPOTIFY_BRANCH $SPOTIFY_VERSION) 
+
+    if [ "$check_builds" = "true" ]; then
         echo "Not Found new .deb ${SPOTIFY_BRANCH} version, skip"
-    else
-        echo "New .deb ${SPOTIFY_BRANCH} version found!"
-        download_deb.sh $SPOTIFY_BRANCH $SPOTIFY_VERSION
-        build_SRPM.sh $SPOTIFY_BRANCH $SPOTIFY_VERSION
+        return
     fi
     
-    IFS="," read -ra distros <<< "$BUILD"
+    echo "New .deb ${SPOTIFY_BRANCH} version found!"
+    download_deb.sh $SPOTIFY_BRANCH $SPOTIFY_VERSION
+    build_SRPM.sh $SPOTIFY_BRANCH $SPOTIFY_VERSION    
 
     for item in "${distros[@]}"; do
         build_RPM.sh $(ls ${BUILD_DIR}/SRPMS/spotify-client-${SPOTIFY_VERSION}*.src.rpm) $SPOTIFY_VERSION $SPOTIFY_BRANCH $item
