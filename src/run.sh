@@ -44,9 +44,9 @@ if [ "$REPO_FILE_URL" ]; then
 fi
 
 check_if_all_builds_exist(){
-    distros=$1
-    SPOTIFY_BRANCH=$2
-    SPOTIFY_VERSION=$3
+    local distros=$1
+    local SPOTIFY_BRANCH=$2
+    local SPOTIFY_VERSION=$3
     
     for item in "${distros[@]}"; do
 
@@ -71,7 +71,7 @@ check_if_all_builds_exist(){
 
 build_RPM(){
 
-    SPOTIFY_BRANCH=$1
+    local SPOTIFY_BRANCH=$1
 
     parser_debian_control_file.py $SPOTIFY_BRANCH spotify-client Version
     SPOTIFY_VERSION=$(cat /tmp/spotify-client.${SPOTIFY_BRANCH}.Version)
