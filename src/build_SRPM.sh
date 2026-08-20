@@ -26,12 +26,7 @@ rm -Rf spotify-client-${SPOTIFY_VERSION}/usr/share/spotify/apt-keys
 
 #Include FFMPEG libraries
 if [[ "$BUILTIN_FFMPEG" =~ ^(1|true|True|y|Y)$ ]]; then
-    echo "Including FFMPEG libraries..."
-    if [ "$LOG_LEVEL" = "all" ]; then
-        curl -fSL "https://github.com/zicstardust/spotify-ffmpeg-libs/releases/download/v${ffmpeg_spotify_release}/spotify-ffmpeg-${ffmpeg_spotify_release}-libs-linux-x86_64.tar.gz" -o "/tmp/ffmpeg_libs.tar.gz"
-    else
-        curl -fSL "https://github.com/zicstardust/spotify-ffmpeg-libs/releases/download/v${ffmpeg_spotify_release}/spotify-ffmpeg-${ffmpeg_spotify_release}-libs-linux-x86_64.tar.gz" -o "/tmp/ffmpeg_libs.tar.gz" &> /dev/null
-    fi
+    echo "Including FFMPEG ${ffmpeg_spotify_release} libraries..."
     mkdir -p spotify-client-${SPOTIFY_VERSION}/usr/share/spotify/ffmpeg
     if [ "$LOG_LEVEL" = "all" ]; then
         tar -xzf /tmp/ffmpeg_libs.tar.gz  -C spotify-client-${SPOTIFY_VERSION}/usr/share/spotify/ffmpeg
