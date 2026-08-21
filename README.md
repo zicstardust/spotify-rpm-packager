@@ -13,6 +13,7 @@ This package includes enhancements and fixes compared to the official .DEB:
 
 
 [GitHub](https://github.com/zicstardust/spotify-rpm-packager)
+[Codeberg](https://codeberg.org/zicstardust/spotify-rpm-packager) (Mirror Repository)
 
 ## Usage, Repository for automatic updates, Common Issues
 
