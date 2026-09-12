@@ -50,12 +50,21 @@ fi
 
 
 if [ "$GPG_NAME" ] && [ "$GPG_EMAIL" ]; then
+    export HOME=/home/spotify
+    export GNUPGHOME=/home/spotify/.gnupg
+    mkdir -p "${GNUPGHOME}"
+    chmod 700 "${GNUPGHOME}"
+    chown -R spotify:spotify "${GNUPGHOME}"
+
     if [ ! -f /gpg-key/private.pgp ] && [ ! -f /gpg-key/public.pgp ]; then
-        generate_gpg.sh
+        setpriv \
+            --reuid=spotify \
+            --regid=spotify \
+            --clear-groups \
+            generate_gpg.sh
     fi
     rpm --import /gpg-key/public.pgp
 fi
-
 
 exec setpriv \
     --reuid=spotify \
