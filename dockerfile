@@ -7,9 +7,9 @@ COPY entrypoint.sh /entrypoint.sh
 
 RUN chmod -R +x /usr/local/bin/*.sh /usr/local/bin/*.py /entrypoint.sh; \
     \
-    microdnf install -y --setopt=install_weak_deps=0 --nodocs epel-release; \
-    \
     microdnf -y update --setopt=install_weak_deps=0 --nodocs; \
+    \
+    microdnf install -y --setopt=install_weak_deps=0 --nodocs epel-release; \
     \
     microdnf -y install --enablerepo=crb --setopt=install_weak_deps=0 --nodocs \
         desktop-file-utils \
