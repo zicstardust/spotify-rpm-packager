@@ -9,5 +9,5 @@ services:
       - ${REPO_PORT:-80}:${REPO_PORT:-80}
     volumes:
       - ./data:/data
-      - ./gpg:/gpg-key
+      - ./gpg-key:/gpg-key
       - ./logs:/logs

@@ -45,7 +45,7 @@ COPY nginx/*_server.conf /etc/nginx/conf.d/
 EXPOSE 80/tcp
 
 VOLUME [ "/data" ]
-VOLUME [ "/gpg" ]
+VOLUME [ "/gpg-key" ]
 VOLUME [ "/logs" ]
 
 ENTRYPOINT ["/entrypoint.sh"]
