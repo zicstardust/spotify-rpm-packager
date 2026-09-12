@@ -57,4 +57,8 @@ if [ "$GPG_NAME" ] && [ "$GPG_EMAIL" ]; then
 fi
 
 
-exec runuser -u spotify -- "$@"
+exec setpriv \
+    --reuid=spotify \
+    --regid=spotify \
+    --groups mock \
+    "$@"
