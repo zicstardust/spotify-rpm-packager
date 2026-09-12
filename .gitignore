@@ -1,5 +1,5 @@
 __pycache__
 data/
 logs/
-gpg/
+gpg-key/
 .env

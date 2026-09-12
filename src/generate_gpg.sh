@@ -14,8 +14,5 @@ Name-Comment: Spotify Repository Signing Key
 Name-Email: $GPG_EMAIL
 EOF
 
-mkdir -p /gpg-key
-
 gpg --export -a "${GPG_EMAIL}" > /gpg-key/public.pgp
 gpg --export-secret-keys -a "${GPG_EMAIL}" > /gpg-key/private.pgp
-
