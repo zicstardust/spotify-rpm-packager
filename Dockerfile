@@ -1,4 +1,4 @@
-FROM almalinux:10.2-minimal
+FROM almalinux:10.3-minimal
 
 
 COPY src/*.sh /usr/local/bin/
